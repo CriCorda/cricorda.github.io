@@ -1,22 +1,153 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricorda Portfolio | Roblox Developer</title>
-    <style>
-        body { font-family: sans-serif; background-color: #1a1a1a; color: white; text-align: center; padding: 50px; }
-        .container { max-width: 800px; margin: auto; }
-        h1 { color: #00a2ff; }
-        .project-card { background: #2a2a2a; padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #444; }
-        img { max-width: 100%; border-radius: 5px; }
-        a { color: #00a2ff; text-decoration: none; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>HELLO!</h1>
-        <p>I'm Cricorda (WillyFromBelair on roblox), a roblox developer.</p>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cricorda | Roblox Developer Portfolio</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --bg-color: #0f0f0f;
+                --card-bg: #181818;
+                --primary-color: #ffb400; /* Giallo come l'esempio */
+                --text-white: #ffffff;
+                --text-gray: #a0a0a0;
+            }
+    
+            body {
+                background-color: var(--bg-color);
+                color: var(--text-white);
+                font-family: 'Inter', sans-serif;
+                margin: 0;
+                padding: 0;
+                line-height: 1.6;
+            }
+    
+            /* Navigazione */
+            nav {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                padding: 20px 10%;
+                background: rgba(15, 15, 15, 0.95);
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+    
+            .logo { font-weight: 900; font-size: 24px; letter-spacing: 1px; }
+            .logo span { color: var(--primary-color); }
+    
+            nav ul { display: flex; list-style: none; gap: 20px; }
+            nav ul li a { color: var(--text-white); text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.3s; }
+            nav ul li a:hover { color: var(--primary-color); }
+    
+            /* Hero Section */
+            .hero {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 100px 15%;
+                min-height: 60vh;
+            }
+    
+            .hero-text h2 { color: var(--primary-color); margin-bottom: 10px; font-size: 18px; letter-spacing: 2px; }
+            .hero-text h1 { font-size: 60px; margin: 0; font-weight: 900; }
+            .hero-text p { color: var(--text-gray); font-size: 20px; margin: 20px 0; }
+    
+            .btn-container { display: flex; gap: 15px; }
+            .btn-fill { background: var(--primary-color); color: black; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+            .btn-outline { border: 2px solid var(--text-white); color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+            .btn-fill:hover { transform: scale(1.05); }
+            .btn-outline:hover { background: white; color: black; }
+    
+            .hero-img img {
+                width: 350px;
+                height: 350px;
+                border-radius: 20px;
+                object-fit: cover;
+                box-shadow: 0 0 30px rgba(255, 180, 0, 0.2);
+            }
+    
+            /* Sezione Progetti */
+            .section-title { text-align: center; font-size: 40px; margin-bottom: 50px; }
+            .portfolio { padding: 80px 10%; }
+            
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 30px;
+            }
+    
+            .project-card {
+                background: var(--card-bg);
+                border-radius: 15px;
+                overflow: hidden;
+                transition: 0.3s;
+                border: 1px solid #222;
+            }
+    
+            .project-card:hover { transform: translateY(-10px); border-color: var(--primary-color); }
+            .project-card img { width: 100%; height: 200px; object-fit: cover; }
+            .project-info { padding: 20px; }
+            .project-info h3 { margin: 0; font-size: 20px; }
+            .project-info p { color: var(--text-gray); font-size: 14px; }
+    
+            @media (max-width: 768px) {
+                .hero { flex-direction: column; text-align: center; padding: 50px 5%; }
+                .hero-text h1 { font-size: 40px; }
+                .hero-img img { width: 250px; height: 250px; margin-top: 50px; }
+                nav ul { display: none; }
+            }
+        </style>
+    </head>
+    <body>
+    
+        <nav>
+            <div class="logo">CRI<span>CORDA</span></div>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#">Servizi</a></li>
+                <li><a href="#">Contatti</a></li>
+            </ul>
+        </nav>
+    
+        <section class="hero">
+            <div class="hero-text">
+                <h2>HELLO!</h2>
+                <h1>I'm <span>Cricorda.</span></h1>
+                <p>A Freelance Roblox Developer</p>
+                <div class="btn-container">
+                    <a href="#" class="btn-fill">HIRE ME</a>
+                    <a href="#portfolio" class="btn-outline">MY WORKS</a>
+                </div>
+            </div>
+            <div class="hero-img">
+                <img src="https://via.placeholder.com/400x400/181818/ffb400?text=Cricorda+Logo" alt="Cricorda">
+            </div>
+        </section>
+    
+        <section class="portfolio" id="portfolio">
+            <h2 class="section-title">My Works</h2>
+            <div class="grid">
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/400x250/222/fff?text=Roblox+Game+1" alt="Project">
+                    <div class="project-info">
+                        <h3>Project Name</h3>
+                        <p>Scripter & UI Designer</p>
+                        <a href="#" style="color:var(--primary-color); text-decoration:none; font-size:12px;">VIEW ON ROBLOX →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <img src="https://via.placeholder.com/400x250/222/fff?text=Roblox+Game+2" alt="Project">
+                    <div class="project-info">
+                        <h3>Map Build</h3>
+                        <p>Environmental Design</p>
+                        <a href="#" style="color:var(--primary-color); text-decoration:none; font-size:12px;">VIEW ON ROBLOX →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>
