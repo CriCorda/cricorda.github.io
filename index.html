@@ -1,153 +1,486 @@
 <!DOCTYPE html>
 <html lang="it">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cricorda | Roblox Developer Portfolio</title>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-        <style>
-            :root {
-                --bg-color: #0f0f0f;
-                --card-bg: #181818;
-                --primary-color: #ffb400; /* Giallo come l'esempio */
-                --text-white: #ffffff;
-                --text-gray: #a0a0a0;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricorda | Roblox Developer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #1a1a2e;
+            --card-dark: #2a2a4a;
+            --primary-accent: #00bcd4; /* Blu/verde chiaro per accenti */
+            --secondary-accent: #ffd700; /* Giallo per highlight */
+            --text-light: #e0e0e0;
+            --text-muted: #a0a0b0;
+            --border-color: #3f3f6f;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigazione */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+            background-color: rgba(26, 26, 46, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--text-light);
+            letter-spacing: 1px;
+        }
+        .navbar .logo span {
+            color: var(--primary-accent);
+        }
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 30px;
+        }
+        .navbar ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 5px 0;
+            position: relative;
+        }
+        .navbar ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--primary-accent);
+            transition: width 0.3s ease;
+        }
+        .navbar ul li a:hover::after,
+        .navbar ul li a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column; /* Cambiato a colonna per layout più flessibile */
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+            padding: 80px 10%;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #0d0d1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before { /* Effetto di sfondo */
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(0,188,212,0.1) 0%, transparent 70%);
+            animation: rotateBackground 20s linear infinite;
+        }
+
+        @keyframes rotateBackground {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            z-index: 10;
+            max-width: 900px;
+        }
+        .hero-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            color: var(--primary-accent);
+            margin-bottom: 10px;
+        }
+        .hero-content h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 72px;
+            font-weight: 900;
+            margin: 10px 0;
+            color: var(--text-light);
+        }
+        .hero-content h1 span {
+            color: var(--secondary-accent);
+        }
+        .hero-content p {
+            font-size: 24px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+        .btn {
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .btn-primary {
+            background-color: var(--primary-accent);
+            color: var(--bg-dark);
+            border: 2px solid var(--primary-accent);
+        }
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-accent);
+            transform: translateY(-5px);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+        }
+        .btn-secondary:hover {
+            background-color: var(--text-light);
+            color: var(--bg-dark);
+            transform: translateY(-5px);
+        }
+
+        /* Sezione Generale */
+        section {
+            padding: 80px 10%;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--text-light);
+            position: relative;
+            display: inline-block;
+        }
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 5px;
+            background-color: var(--secondary-accent);
+            border-radius: 3px;
+        }
+        .section-header p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-top: 20px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        .about-image {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+        }
+        .about-image img {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-accent);
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
+        }
+        .about-text {
+            flex: 2;
+            min-width: 300px;
+        }
+        .about-text h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            color: var(--secondary-accent);
+            margin-bottom: 20px;
+        }
+        .about-text p {
+            font-size: 17px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .skill-card {
+            background-color: var(--card-dark);
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+            border-color: var(--primary-accent);
+        }
+        .skill-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            color: var(--primary-accent);
+            margin-bottom: 15px;
+        }
+        .skill-card p {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        /* Portfolio Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin-top: 40px;
+        }
+        .portfolio-item {
+            background-color: var(--card-dark);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+        }
+        .portfolio-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        .portfolio-info {
+            padding: 25px;
+            text-align: center;
+        }
+        .portfolio-info h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            color: var(--secondary-accent);
+            margin-bottom: 10px;
+        }
+        .portfolio-info p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .portfolio-info .view-btn {
+            display: inline-block;
+            background-color: var(--primary-accent);
+            color: var(--bg-dark);
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+        }
+        .portfolio-info .view-btn:hover {
+            background-color: var(--secondary-accent);
+            color: var(--bg-dark);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 10%;
+            background-color: #121223;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+        footer .social-links a {
+            color: var(--primary-accent);
+            font-size: 24px;
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer .social-links a:hover {
+            color: var(--secondary-accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .navbar { padding: 15px 5%; }
+            .hero-content h1 { font-size: 60px; }
+            .hero-content p { font-size: 20px; }
+            .section-header h2 { font-size: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 15px; }
+            .navbar ul { display: none; /* Potresti implementare un menu hamburger per mobile */ }
+            .hero { padding: 60px 5%; }
+            .hero-content h1 { font-size: 45px; }
+            .hero-content p { font-size: 18px; }
+            .hero-buttons { flex-direction: column; gap: 15px; }
+            .btn { width: 80%; }
+            .about-content { flex-direction: column; text-align: center; }
+            .about-image { margin-bottom: 30px; }
+            .section-header h2 { font-size: 35px; }
+            .skills-grid, .portfolio-grid {
+                grid-template-columns: 1fr;
             }
-    
-            body {
-                background-color: var(--bg-color);
-                color: var(--text-white);
-                font-family: 'Inter', sans-serif;
-                margin: 0;
-                padding: 0;
-                line-height: 1.6;
-            }
-    
-            /* Navigazione */
-            nav {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                padding: 20px 10%;
-                background: rgba(15, 15, 15, 0.95);
-                position: sticky;
-                top: 0;
-                z-index: 1000;
-            }
-    
-            .logo { font-weight: 900; font-size: 24px; letter-spacing: 1px; }
-            .logo span { color: var(--primary-color); }
-    
-            nav ul { display: flex; list-style: none; gap: 20px; }
-            nav ul li a { color: var(--text-white); text-decoration: none; font-size: 14px; font-weight: 600; transition: 0.3s; }
-            nav ul li a:hover { color: var(--primary-color); }
-    
-            /* Hero Section */
-            .hero {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 100px 15%;
-                min-height: 60vh;
-            }
-    
-            .hero-text h2 { color: var(--primary-color); margin-bottom: 10px; font-size: 18px; letter-spacing: 2px; }
-            .hero-text h1 { font-size: 60px; margin: 0; font-weight: 900; }
-            .hero-text p { color: var(--text-gray); font-size: 20px; margin: 20px 0; }
-    
-            .btn-container { display: flex; gap: 15px; }
-            .btn-fill { background: var(--primary-color); color: black; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: 0.3s; }
-            .btn-outline { border: 2px solid var(--text-white); color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; transition: 0.3s; }
-            .btn-fill:hover { transform: scale(1.05); }
-            .btn-outline:hover { background: white; color: black; }
-    
-            .hero-img img {
-                width: 350px;
-                height: 350px;
-                border-radius: 20px;
-                object-fit: cover;
-                box-shadow: 0 0 30px rgba(255, 180, 0, 0.2);
-            }
-    
-            /* Sezione Progetti */
-            .section-title { text-align: center; font-size: 40px; margin-bottom: 50px; }
-            .portfolio { padding: 80px 10%; }
-            
-            .grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 30px;
-            }
-    
-            .project-card {
-                background: var(--card-bg);
-                border-radius: 15px;
-                overflow: hidden;
-                transition: 0.3s;
-                border: 1px solid #222;
-            }
-    
-            .project-card:hover { transform: translateY(-10px); border-color: var(--primary-color); }
-            .project-card img { width: 100%; height: 200px; object-fit: cover; }
-            .project-info { padding: 20px; }
-            .project-info h3 { margin: 0; font-size: 20px; }
-            .project-info p { color: var(--text-gray); font-size: 14px; }
-    
-            @media (max-width: 768px) {
-                .hero { flex-direction: column; text-align: center; padding: 50px 5%; }
-                .hero-text h1 { font-size: 40px; }
-                .hero-img img { width: 250px; height: 250px; margin-top: 50px; }
-                nav ul { display: none; }
-            }
-        </style>
-    </head>
-    <body>
-    
-        <nav>
-            <div class="logo">CRI<span>CORDA</span></div>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#">Servizi</a></li>
-                <li><a href="#">Contatti</a></li>
-            </ul>
-        </nav>
-    
-        <section class="hero">
-            <div class="hero-text">
-                <h2>HELLO!</h2>
-                <h1>I'm <span>Cricorda.</span></h1>
-                <p>A Freelance Roblox Developer</p>
-                <div class="btn-container">
-                    <a href="#" class="btn-fill">HIRE ME</a>
-                    <a href="#portfolio" class="btn-outline">MY WORKS</a>
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo">CRI<span>CORDA</span></a>
+        <ul>
+            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#about">Chi Sono</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contatti</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>BENVENUTO NEL MIO SPAZIO</h2>
+            <h1>Ciao, sono <span>Cricorda.</span></h1>
+            <p>Un Appassionato Roblox Developer</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">CONTATTAMI</a>
+                <a href="#portfolio" class="btn btn-secondary">I MIEI LAVORI</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-header">
+            <h2>Chi Sono</h2>
+            <p>La mia passione per lo sviluppo su Roblox</p>
+        </div>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="https://via.placeholder.com/280/1a1a2e/00bcd4?text=Cricorda" alt="Immagine di Cricorda">
+            </div>
+            <div class="about-text">
+                <h3>Sono un creativo e problem solver nel mondo Roblox.</h3>
+                <p>Dal [Anno Inizio], ho immerso le mie mani nella creazione di mondi e esperienze coinvolgenti su Roblox. La mia avventura è iniziata con la semplice curiosità di costruire, e si è evoluta in una profonda passione per la programmazione (Lua) e il design.</p>
+                <p>Mi specializzo nella creazione di [Tipo di giochi/modelli, es: simulatori, giochi di ruolo, modelli 3D dettagliati] e sono sempre alla ricerca di nuove sfide per migliorare le mie competenze e creare esperienze indimenticabili per i giocatori.</p>
+                <p>Esplora il mio portfolio per vedere alcuni dei miei lavori migliori e non esitare a contattarmi per collaborazioni o commissioni!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-header">
+            <h2>Le Mie Competenze</h2>
+            <p>Gli strumenti e le tecniche che utilizzo</p>
+        </div>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>Lua Scripting</h3>
+                <p>Programmazione di logiche di gioco complesse, sistemi di inventario, UI interattive e molto altro.</p>
+            </div>
+            <div class="skill-card">
+                <h3>Building & Modeling</h3>
+                <p>Creazione di ambienti dettagliati, modelli 3D originali e architetture immersive.</p>
+            </div>
+            <div class="skill-card">
+                <h3>UI/UX Design</h3>
+                <p>Progettazione di interfacce utente intuitive ed esteticamente piacevoli per migliorare l'esperienza giocatore.</p>
+            </div>
+            <div class="skill-card">
+                <h3>Game Design</h3>
+                <p>Ideazione e bilanciamento di meccaniche di gioco divertenti e sistemi di progressione.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="section-header">
+            <h2>I Miei Progetti</h2>
+            <p>Una selezione dei miei lavori migliori su Roblox</p>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/400x250/2a2a4a/00bcd4?text=Progetto+Roblox+1" alt="Nome Progetto 1">
+                <div class="portfolio-info">
+                    <h3>[Nome del Tuo Gioco/Modello 1]</h3>
+                    <p>Ho contribuito come [Ruolo: Scripter, Builder, UI Designer] alla creazione di questo [Tipo: simulatore, obby, mappa].</p>
+                    <a href="LINK_AL_TUO_GIOCO_1" class="view-btn" target="_blank">Vedi su Roblox</a>
                 </div>
             </div>
-            <div class="hero-img">
-                <img src="https://via.placeholder.com/400x400/181818/ffb400?text=Cricorda+Logo" alt="Cricorda">
-            </div>
-        </section>
-    
-        <section class="portfolio" id="portfolio">
-            <h2 class="section-title">My Works</h2>
-            <div class="grid">
-                <div class="project-card">
-                    <img src="https://via.placeholder.com/400x250/222/fff?text=Roblox+Game+1" alt="Project">
-                    <div class="project-info">
-                        <h3>Project Name</h3>
-                        <p>Scripter & UI Designer</p>
-                        <a href="#" style="color:var(--primary-color); text-decoration:none; font-size:12px;">VIEW ON ROBLOX →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <img src="https://via.placeholder.com/400x250/222/fff?text=Roblox+Game+2" alt="Project">
-                    <div class="project-info">
-                        <h3>Map Build</h3>
-                        <p>Environmental Design</p>
-                        <a href="#" style="color:var(--primary-color); text-decoration:none; font-size:12px;">VIEW ON ROBLOX →</a>
-                    </div>
+            <div class="portfolio-item">
+                <img src="https://via.placeholder.com/400x250/2a2a4a/00bcd4?text=Progetto+Roblox+2" alt="Nome Progetto 2">
+                <div class="portfolio-info">
+                    <h3>[Nome del Tuo Gioco/Modello 2]</h3>
+                    <p>Questo progetto [descrizione del progetto, ad esempio: "mostra le mie abilità nel building di città futuristiche"].</p>
+                    <a href="LINK_AL_TUO_GIOCO_2" class="view-btn" target="_blank">Vedi su Roblox</a>
                 </div>
             </div>
-        </section>
-    </body>
+            </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-header">
+            <h2>Contattami</h2>
+            <p>Disponibile per commissioni e collaborazioni!</p>
+        </div>
+        <div style="text-align: center;">
+            <p>Se sei interessato ai miei servizi o vuoi collaborare, non esitare a contattarmi:</p>
+            <p style="font-size: 20px; font-weight: 700; color: var(--secondary-accent);">Discord: TuoDiscord#1234</p>
+            <p style="font-size: 20px; font-weight: 700; color: var(--secondary-accent);">Roblox Profile: [Link al tuo profilo Roblox]</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            </div>
+        <p>&copy; 2026 Cricorda. Tutti i diritti riservati.</p>
+    </footer>
+
+</body>
 </html>
