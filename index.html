@@ -339,32 +339,48 @@
             font-size: 15px;
         }
 
-        .status-badge {
-            display: inline-flex;
+/* Full-width Commission Banner */
+        .commission-banner {
+            width: 100%;
+            background: linear-gradient(90deg, #1b5e20 0%, #4caf50 50%, #1b5e20 100%);
+            background-size: 200% auto;
+            padding: 25px 0;
+            text-align: center;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+            animation: gradientMove 4s ease infinite;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 700;
-            border: 1px solid var(--border-color);
-            margin-bottom: 20px;
+            justify-content: center;
+            gap: 5px;
         }
         
-        .status-dot {
-            height: 10px;
-            width: 10px;
-            background-color: #4caf50; /* Green for Open */
-            border-radius: 50%;
-            margin-right: 10px;
-            box-shadow: 0 0 10px #4caf50;
-            animation: pulse 2s infinite;
+        .commission-banner h2 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        
+        .commission-banner p {
+            margin: 0;
+            font-weight: 600;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Adjusting section spacing to accommodate the banner */
+        #about {
+            padding-top: 60px;
         }
 
         /* Responsive Design */
@@ -415,12 +431,12 @@
                 <a href="#portfolio" class="btn btn-secondary">MY WORKS</a>
             </div>
         </div>
-
-        <div class="status-badge">
-            <span class="status-dot"></span>
-            COMMISSIONS: OPEN
-        </div>
     </section>
+
+    <div class="commission-banner">
+        <h2>COMMISSIONS ARE OPEN</h2>
+        <p>High-Quality Systems & Gameplay Engineering • Discord: cri.corda</p>
+    </div>
 
     <section id="about">
         <div class="section-header">
