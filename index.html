@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +9,8 @@
         :root {
             --bg-dark: #1a1a2e;
             --card-dark: #2a2a4a;
-            --primary-accent: #00bcd4; /* Blu/verde chiaro per accenti */
-            --secondary-accent: #ffd700; /* Giallo per highlight */
+            --primary-accent: #00bcd4; /* Light blue/green for accents */
+            --secondary-accent: #ffd700; /* Yellow for highlights */
             --text-light: #e0e0e0;
             --text-muted: #a0a0b0;
             --border-color: #3f3f6f;
@@ -26,7 +26,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Navigazione */
+        /* Navigation */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -44,6 +44,7 @@
             font-weight: 900;
             color: var(--text-light);
             letter-spacing: 1px;
+            text-decoration: none;
         }
         .navbar .logo span {
             color: var(--primary-accent);
@@ -81,7 +82,7 @@
         /* Hero Section */
         .hero {
             display: flex;
-            flex-direction: column; /* Cambiato a colonna per layout più flessibile */
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 80vh;
@@ -91,7 +92,7 @@
             position: relative;
             overflow: hidden;
         }
-        .hero::before { /* Effetto di sfondo */
+        .hero::before { 
             content: '';
             position: absolute;
             top: -50%;
@@ -167,7 +168,7 @@
             transform: translateY(-5px);
         }
 
-        /* Sezione Generale */
+        /* General Section Styles */
         section {
             padding: 80px 10%;
             margin: 0 auto;
@@ -335,16 +336,6 @@
             color: var(--text-muted);
             font-size: 15px;
         }
-        footer .social-links a {
-            color: var(--primary-accent);
-            font-size: 24px;
-            margin: 0 15px;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        footer .social-links a:hover {
-            color: var(--secondary-accent);
-        }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
@@ -356,7 +347,7 @@
 
         @media (max-width: 768px) {
             .navbar { flex-direction: column; gap: 15px; }
-            .navbar ul { display: none; /* Potresti implementare un menu hamburger per mobile */ }
+            .navbar ul { display: none; }
             .hero { padding: 60px 5%; }
             .hero-content h1 { font-size: 45px; }
             .hero-content p { font-size: 18px; }
@@ -377,109 +368,107 @@
         <a href="#" class="logo">CRI<span>CORDA</span></a>
         <ul>
             <li><a href="#home" class="active">Home</a></li>
-            <li><a href="#about">Chi Sono</a></li>
+            <li><a href="#about">About Me</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contatti</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
     <section class="hero" id="home">
         <div class="hero-content">
-            <h2>BENVENUTO NEL MIO SPAZIO</h2>
-            <h1>Ciao, sono <span>Cricorda.</span></h1>
-            <p>Un Appassionato Roblox Developer</p>
+            <h2>WELCOME TO MY SPACE</h2>
+            <h1>Hi, I'm <span>Cricorda.</span></h1>
+            <p>A Passionate Roblox Developer</p>
             <div class="hero-buttons">
-                <a href="#contact" class="btn btn-primary">CONTATTAMI</a>
-                <a href="#portfolio" class="btn btn-secondary">I MIEI LAVORI</a>
+                <a href="#contact" class="btn btn-primary">HIRE ME</a>
+                <a href="#portfolio" class="btn btn-secondary">MY WORKS</a>
             </div>
         </div>
     </section>
 
     <section id="about">
         <div class="section-header">
-            <h2>Chi Sono</h2>
-            <p>La mia passione per lo sviluppo su Roblox</p>
+            <h2>About Me</h2>
+            <p>My passion for development on Roblox</p>
         </div>
         <div class="about-content">
             <div class="about-image">
-                <img src="https://via.placeholder.com/280/1a1a2e/00bcd4?text=Cricorda" alt="Immagine di Cricorda">
+                <img src="https://via.placeholder.com/280/1a1a2e/00bcd4?text=Cricorda" alt="Cricorda's Image">
             </div>
             <div class="about-text">
-                <h3>Sono un creativo e problem solver nel mondo Roblox.</h3>
-                <p>Dal [Anno Inizio], ho immerso le mie mani nella creazione di mondi e esperienze coinvolgenti su Roblox. La mia avventura è iniziata con la semplice curiosità di costruire, e si è evoluta in una profonda passione per la programmazione (Lua) e il design.</p>
-                <p>Mi specializzo nella creazione di [Tipo di giochi/modelli, es: simulatori, giochi di ruolo, modelli 3D dettagliati] e sono sempre alla ricerca di nuove sfide per migliorare le mie competenze e creare esperienze indimenticabili per i giocatori.</p>
-                <p>Esplora il mio portfolio per vedere alcuni dei miei lavori migliori e non esitare a contattarmi per collaborazioni o commissioni!</p>
+                <h3>I am a creative problem solver in the Roblox world.</h3>
+                <p>Since [Starting Year], I have immersed myself in creating engaging worlds and experiences on Roblox. My adventure began with simple curiosity to build, and evolved into a deep passion for programming (Lua) and design.</p>
+                <p>I specialize in creating [Type of games/models, e.g.: simulators, RPGs, detailed 3D models] and I am always looking for new challenges to improve my skills and create unforgettable experiences for players.</p>
+                <p>Explore my portfolio to see some of my best work and don't hesitate to contact me for collaborations or commissions!</p>
             </div>
         </div>
     </section>
 
     <section id="skills">
         <div class="section-header">
-            <h2>Le Mie Competenze</h2>
-            <p>Gli strumenti e le tecniche che utilizzo</p>
+            <h2>My Skills</h2>
+            <p>The tools and techniques I use</p>
         </div>
         <div class="skills-grid">
             <div class="skill-card">
                 <h3>Lua Scripting</h3>
-                <p>Programmazione di logiche di gioco complesse, sistemi di inventario, UI interattive e molto altro.</p>
+                <p>Programming complex game logic, inventory systems, interactive UIs, and much more.</p>
             </div>
             <div class="skill-card">
                 <h3>Building & Modeling</h3>
-                <p>Creazione di ambienti dettagliati, modelli 3D originali e architetture immersive.</p>
+                <p>Creating detailed environments, original 3D models, and immersive architectures.</p>
             </div>
             <div class="skill-card">
                 <h3>UI/UX Design</h3>
-                <p>Progettazione di interfacce utente intuitive ed esteticamente piacevoli per migliorare l'esperienza giocatore.</p>
+                <p>Designing intuitive and aesthetically pleasing user interfaces to enhance the player experience.</p>
             </div>
             <div class="skill-card">
                 <h3>Game Design</h3>
-                <p>Ideazione e bilanciamento di meccaniche di gioco divertenti e sistemi di progressione.</p>
+                <p>Ideation and balancing of fun game mechanics and progression systems.</p>
             </div>
         </div>
     </section>
 
     <section id="portfolio">
         <div class="section-header">
-            <h2>I Miei Progetti</h2>
-            <p>Una selezione dei miei lavori migliori su Roblox</p>
+            <h2>My Projects</h2>
+            <p>A selection of my best work on Roblox</p>
         </div>
         <div class="portfolio-grid">
             <div class="portfolio-item">
-                <img src="https://via.placeholder.com/400x250/2a2a4a/00bcd4?text=Progetto+Roblox+1" alt="Nome Progetto 1">
+                <img src="https://via.placeholder.com/400x250/2a2a4a/00bcd4?text=Roblox+Project+1" alt="Project Name 1">
                 <div class="portfolio-info">
-                    <h3>[Nome del Tuo Gioco/Modello 1]</h3>
-                    <p>Ho contribuito come [Ruolo: Scripter, Builder, UI Designer] alla creazione di questo [Tipo: simulatore, obby, mappa].</p>
-                    <a href="LINK_AL_TUO_GIOCO_1" class="view-btn" target="_blank">Vedi su Roblox</a>
+                    <h3>[Game/Model Name 1]</h3>
+                    <p>Contributed as [Role: Scripter, Builder, UI Designer] to the creation of this [Type: simulator, obby, map].</p>
+                    <a href="YOUR_GAME_LINK_1" class="view-btn" target="_blank">View on Roblox</a>
                 </div>
             </div>
             <div class="portfolio-item">
-                <img src="https://via.placeholder.com/400x250/2a2a4a/00bcd4?text=Progetto+Roblox+2" alt="Nome Progetto 2">
+                <img src="https://via.placeholder.com/400x250/2a2a4a/00bcd4?text=Roblox+Project+2" alt="Project Name 2">
                 <div class="portfolio-info">
-                    <h3>[Nome del Tuo Gioco/Modello 2]</h3>
-                    <p>Questo progetto [descrizione del progetto, ad esempio: "mostra le mie abilità nel building di città futuristiche"].</p>
-                    <a href="LINK_AL_TUO_GIOCO_2" class="view-btn" target="_blank">Vedi su Roblox</a>
+                    <h3>[Game/Model Name 2]</h3>
+                    <p>This project [description of the project, e.g.: "showcases my skills in building futuristic cities"].</p>
+                    <a href="YOUR_GAME_LINK_2" class="view-btn" target="_blank">View on Roblox</a>
                 </div>
             </div>
-            </div>
+        </div>
     </section>
 
     <section id="contact">
         <div class="section-header">
-            <h2>Contattami</h2>
-            <p>Disponibile per commissioni e collaborazioni!</p>
+            <h2>Contact Me</h2>
+            <p>Available for commissions and collaborations!</p>
         </div>
         <div style="text-align: center;">
-            <p>Se sei interessato ai miei servizi o vuoi collaborare, non esitare a contattarmi:</p>
-            <p style="font-size: 20px; font-weight: 700; color: var(--secondary-accent);">Discord: TuoDiscord#1234</p>
-            <p style="font-size: 20px; font-weight: 700; color: var(--secondary-accent);">Roblox Profile: [Link al tuo profilo Roblox]</p>
+            <p>If you are interested in my services or want to collaborate, feel free to reach out:</p>
+            <p style="font-size: 20px; font-weight: 700; color: var(--secondary-accent);">Discord: YourDiscord#1234</p>
+            <p style="font-size: 20px; font-weight: 700; color: var(--secondary-accent);">Roblox Profile: [Link to your Roblox profile]</p>
         </div>
     </section>
 
     <footer>
-        <div class="social-links">
-            </div>
-        <p>&copy; 2026 Cricorda. Tutti i diritti riservati.</p>
+        <p>&copy; 2026 Cricorda. All rights reserved.</p>
     </footer>
 
 </body>
