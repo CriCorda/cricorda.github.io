@@ -74,6 +74,8 @@
             background-color: var(--primary-accent);
             transition: width 0.3s ease;
         }
+        
+        /* This triggers the underline when the JS adds the class */
         .navbar ul li a:hover::after,
         .navbar ul li a.active::after {
             width: 100%;
@@ -367,7 +369,7 @@
     <nav class="navbar">
         <a href="#" class="logo">CRI<span>CORDA</span></a>
         <ul>
-            <li><a href="#home" class="active">Home</a></li>
+            <li><a href="#home"">Home</a></li>
             <li><a href="#about">About Me</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
@@ -494,6 +496,30 @@
     <footer>
         <p>&copy; 2026 Cricorda. All rights reserved.</p>
     </footer>
+    
+<script>
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".navbar ul li a");
 
+    window.addEventListener("scroll", () => {
+        let current = "";
+
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            // Checks if the scroll position is within the section (with a 150px offset)
+            if (pageYOffset >= sectionTop - 150) {
+                current = section.getAttribute("id");
+            }
+        });
+
+        navLinks.forEach((link) => {
+            link.classList.remove("active");
+            if (link.getAttribute("href").includes(current)) {
+                link.classList.add("active");
+            }
+        });
+    });
+</script>
 </body>
 </html>
