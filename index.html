@@ -4,203 +4,192 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRICORDA // OVERRIDE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Inter:wght@900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+        :root {
+            --bg: #000;
+            --accent: #fff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background: #000;
-            color: #fff;
-            font-family: 'Space Grotesk', sans-serif;
-            overflow: hidden;
-            height: 100vh;
+            background: var(--bg);
+            color: var(--accent);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* --- AMBIENT BACKGROUND --- */
-        #canvas-container {
+        /* --- THE DISTORTED BACKGROUND --- */
+        .bg-text {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000 100%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40vw;
+            font-weight: 900;
+            color: rgba(255,255,255,0.02);
             z-index: -1;
+            white-space: nowrap;
+            pointer-events: none;
         }
 
-        /* --- FLOATING HUD ELEMENTS --- */
-        .hud-frame {
-            position: absolute;
-            inset: 40px;
-            border: 1px solid rgba(255,255,255,0.1);
-            pointer-events: none;
+        /* --- STARK NAVIGATION --- */
+        nav {
+            padding: 30px;
             display: flex;
             justify-content: space-between;
-            padding: 20px;
-            text-transform: uppercase;
-            font-size: 10px;
-            letter-spacing: 4px;
-            color: rgba(255,255,255,0.3);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            mix-blend-mode: difference;
         }
 
-        /* --- MAIN CONTENT --- */
-        .wrapper {
+        .logo { font-weight: 900; letter-spacing: -1px; }
+
+        /* --- HERO SECTION --- */
+        .hero {
             height: 100vh;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            padding: 5%;
+            padding: 0 5%;
         }
 
-        .main-card {
-            width: 100%;
-            max-width: 1100px;
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 40px;
-            position: relative;
-        }
-
-        .hero-text h1 {
+        .hero h1 {
             font-family: 'Syne', sans-serif;
-            font-size: clamp(4rem, 10vw, 8rem);
+            font-size: clamp(4rem, 18vw, 15rem);
             line-height: 0.8;
-            margin-bottom: 20px;
-            background: linear-gradient(to bottom, #fff 40%, rgba(255,255,255,0.1));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
         }
 
-        /* --- THE "STYLE" (REEL) --- */
-        .project-reel {
-            height: 500px;
-            overflow-y: scroll;
-            padding-right: 20px;
-            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+        .hero-meta {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
         }
 
-        .project-reel::-webkit-scrollbar { width: 2px; }
-        .project-reel::-webkit-scrollbar-thumb { background: #fff; }
-
-        .reel-item {
-            margin-bottom: 60px;
-            opacity: 0.4;
-            transition: 0.5s;
-            transform: scale(0.9);
-            transform-origin: left;
+        /* --- THE WORK REEL (HORIZONTAL) --- */
+        .scroll-container {
+            display: flex;
+            padding: 100px 5%;
+            gap: 40px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
         }
 
-        .reel-item:hover { opacity: 1; transform: scale(1); }
+        .scroll-container::-webkit-scrollbar { display: none; }
 
-        .video-container {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #111;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.1);
-            overflow: hidden;
+        .work-card {
+            min-width: 80vw;
+            height: 70vh;
+            scroll-snap-align: center;
             position: relative;
+            background: #111;
+            overflow: hidden;
         }
 
-        .video-container video { width: 100%; height: 100%; object-fit: cover; }
+        .work-card video, .work-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1);
+            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
 
-        .item-info { display: flex; justify-content: space-between; align-items: flex-end; }
-        .item-info h3 { font-size: 1.5rem; text-transform: uppercase; }
-        .item-info span { font-size: 0.7rem; color: #666; }
+        .work-card:hover video, .work-card:hover img {
+            filter: grayscale(0);
+            transform: scale(1.05);
+        }
 
-        /* --- CONTACT PILL --- */
-        .uplink {
-            position: fixed;
-            bottom: 60px;
-            left: 60px;
-            background: #fff;
-            color: #000;
-            padding: 15px 30px;
-            font-weight: 700;
+        .card-title {
+            position: absolute;
+            bottom: 40px;
+            left: 40px;
+            font-size: clamp(2rem, 8vw, 6rem);
+            font-family: 'Syne', sans-serif;
+            mix-blend-mode: difference;
+        }
+
+        /* --- FOOTER / CONTACT --- */
+        .contact {
+            padding: 200px 5% 100px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .discord-btn {
+            font-size: 2rem;
+            color: var(--accent);
             text-decoration: none;
+            border-bottom: 5px solid var(--accent);
             transition: 0.3s;
         }
-        .uplink:hover { letter-spacing: 5px; background: #ff0055; color: #fff; }
 
-        @media (max-width: 900px) {
-            .main-card { grid-template-columns: 1fr; }
-            .project-reel { height: auto; overflow: visible; mask-image: none; }
+        .discord-btn:hover { background: var(--accent); color: #000; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 5rem; }
+            .work-card { min-width: 90vw; }
         }
     </style>
 </head>
 <body>
 
-    <div id="canvas-container"></div>
-    
-    <div class="hud-frame">
-        <div>CRICORDA // ENG.LOG</div>
-        <div>STABLE_CONNECTION // 2026</div>
-    </div>
+    <div class="bg-text">CRICORDA</div>
 
-    <div class="wrapper">
-        <div class="main-card">
-            
-            <div class="hero-text">
-                <span style="color: #ff0055; font-weight: 700; letter-spacing: 5px;">[ STATUS: ACTIVE ]</span>
-                <h1>ENGINE<br>CRITICAL</h1>
-                <p style="max-width: 400px; color: #888; font-size: 1.1rem; line-height: 1.5; margin-top: 20px;">
-                    Developing high-concurrency systems and modular Luau frameworks for top-tier Roblox experiences.
-                </p>
-                
-                <div style="margin-top: 40px; display: flex; gap: 30px; color: #444; font-weight: 700;">
-                    <div>180K+<br><span style="font-size: 10px; font-weight: 300;">MEMBERS</span></div>
-                    <div>OOP<br><span style="font-size: 10px; font-weight: 300;">ARCHITECTURE</span></div>
-                    <div>PROFILES<br><span style="font-size: 10px; font-weight: 300;">OPTIMIZED</span></div>
-                </div>
-            </div>
+    <nav>
+        <div class="logo">CRI // 26</div>
+        <div>AVAILABILITY: OPEN</div>
+    </nav>
 
-            <div class="project-reel">
-                <div class="reel-item">
-                    <div class="video-container">
-                        <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                            <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="item-info">
-                        <h3>Sensory AI</h3>
-                        <span>001 // SYSTEM</span>
-                    </div>
-                </div>
+    <section class="hero">
+        <h1>ROBLOX<br>SYSTEMS</h1>
+        <div class="hero-meta">
+            <p style="max-width: 300px; font-weight: 300; text-transform: uppercase; letter-spacing: 2px;">Architecting the core of high-concurrency experiences.</p>
+            <p>[ SCROLL TO ENTER ]</p>
+        </div>
+    </section>
 
-                <div class="reel-item">
-                    <div class="video-container">
-                        <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                            <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="item-info">
-                        <h3>Ability Framework</h3>
-                        <span>002 // COMBAT</span>
-                    </div>
-                </div>
+    <div class="scroll-container">
+        <div class="work-card">
+            <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
+            </video>
+            <h3 class="card-title">SENSORY AI</h3>
+        </div>
 
-                <div class="reel-item">
-                    <div class="video-container">
-                        <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                            <source src="assets/videos/FishingSystemPortfolio.mp4" type="video/mp4">
-                        </video>
-                    </div>
-                    <div class="item-info">
-                        <h3>World Interaction</h3>
-                        <span>003 // LOGIC</span>
-                    </div>
-                </div>
-            </div>
+        <div class="work-card">
+            <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
+            </video>
+            <h3 class="card-title">COMBAT OOP</h3>
+        </div>
 
+        <div class="work-card">
+            <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                <source src="assets/videos/FishingSystemPortfolio.mp4" type="video/mp4">
+            </video>
+            <h3 class="card-title">WORLD LOGIC</h3>
         </div>
     </div>
 
-    <a href="#" class="uplink">DISCORD: CRI.CORDA</a>
+    <section class="contact">
+        <h2>CONNECT</h2>
+        <a href="#" class="discord-btn">DISCORD: CRI.CORDA</a>
+    </section>
 
-    <script>
-        // Simple background movement
-        document.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            document.getElementById('canvas-container').style.background = 
-                `radial-gradient(circle at ${x * 100}% ${y * 100}%, #1a050d 0%, #000 100%)`;
-        });
-    </script>
+    <footer style="padding: 40px; text-align: center; font-size: 10px; opacity: 0.3; letter-spacing: 5px;">
+        EST. 2022 // LOGIC OVER MAGIC
+    </footer>
+
 </body>
 </html>
