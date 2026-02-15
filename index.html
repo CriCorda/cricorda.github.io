@@ -3,193 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRICORDA // OVERRIDE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Inter:wght@900&display=swap" rel="stylesheet">
+    <title>Cricorda | Engineering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #000;
-            --accent: #fff;
+            --bg: #050508;
+            --surface: rgba(15, 15, 25, 0.7);
+            --accent: #a855f7; /* Amethyst Purple */
+            --accent-glow: rgba(168, 85, 247, 0.4);
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             background: var(--bg);
-            color: var(--accent);
-            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+            background-image: 
+                radial-gradient(circle at 50% -20%, var(--accent-glow) 0%, transparent 50%);
         }
 
-        /* --- THE DISTORTED BACKGROUND --- */
-        .bg-text {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 40vw;
-            font-weight: 900;
-            color: rgba(255,255,255,0.02);
-            z-index: -1;
-            white-space: nowrap;
-            pointer-events: none;
-        }
-
-        /* --- STARK NAVIGATION --- */
+        /* --- FLOATING PILL NAV --- */
         nav {
-            padding: 30px;
-            display: flex;
-            justify-content: space-between;
             position: fixed;
-            width: 100%;
-            z-index: 100;
-            mix-blend-mode: difference;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            padding: 8px 12px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
         }
 
-        .logo { font-weight: 900; letter-spacing: -1px; }
+        .nav-item {
+            padding: 8px 18px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 100px;
+            transition: 0.3s;
+        }
 
-        /* --- HERO SECTION --- */
+        .nav-item:hover, .nav-item.active {
+            color: #fff;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-hire {
+            background: #fff;
+            color: #000 !important;
+            font-weight: 700;
+        }
+
+        /* --- CENTERED HERO --- */
         .hero {
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 5%;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
         }
+
+        .status-pill {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--accent);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent); }
 
         .hero h1 {
-            font-family: 'Syne', sans-serif;
-            font-size: clamp(4rem, 18vw, 15rem);
-            line-height: 0.8;
-            text-transform: uppercase;
-            letter-spacing: -0.05em;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom, #fff 60%, var(--text-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .hero-meta {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        /* --- THE WORK REEL (HORIZONTAL) --- */
-        .scroll-container {
-            display: flex;
-            padding: 100px 5%;
-            gap: 40px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-        }
-
-        .scroll-container::-webkit-scrollbar { display: none; }
-
-        .work-card {
-            min-width: 80vw;
-            height: 70vh;
-            scroll-snap-align: center;
-            position: relative;
-            background: #111;
-            overflow: hidden;
-        }
-
-        .work-card video, .work-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(1);
-            transition: 0.8s cubic-bezier(0.2, 1, 0.3, 1);
-        }
-
-        .work-card:hover video, .work-card:hover img {
-            filter: grayscale(0);
-            transform: scale(1.05);
-        }
-
-        .card-title {
-            position: absolute;
-            bottom: 40px;
-            left: 40px;
-            font-size: clamp(2rem, 8vw, 6rem);
-            font-family: 'Syne', sans-serif;
-            mix-blend-mode: difference;
-        }
-
-        /* --- FOOTER / CONTACT --- */
-        .contact {
-            padding: 200px 5% 100px;
-            text-align: center;
-        }
-
-        .contact h2 {
-            font-size: clamp(3rem, 10vw, 8rem);
+        .hero p {
+            color: var(--text-dim);
+            max-width: 600px;
+            font-size: 1.1rem;
+            line-height: 1.6;
             margin-bottom: 40px;
-            text-transform: uppercase;
         }
 
-        .discord-btn {
-            font-size: 2rem;
-            color: var(--accent);
+        /* --- BUTTONS --- */
+        .btn-group { display: flex; gap: 15px; }
+
+        .btn {
+            padding: 14px 35px;
+            border-radius: 100px;
             text-decoration: none;
-            border-bottom: 5px solid var(--accent);
+            font-weight: 600;
+            font-size: 15px;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #000;
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: #fff;
+            border-color: var(--border);
+        }
+
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+        /* --- EXPERTISE GRID --- */
+        section { padding: 100px 10%; text-align: center; }
+
+        .section-header { margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        .section-header div { width: 40px; height: 3px; background: var(--accent); margin: 0 auto; border-radius: 10px; }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .exp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 24px;
+            text-align: left;
             transition: 0.3s;
         }
 
-        .discord-btn:hover { background: var(--accent); color: #000; }
+        .exp-card:hover { border-color: var(--accent); background: rgba(168, 85, 247, 0.03); }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 5rem; }
-            .work-card { min-width: 90vw; }
+        .exp-card h3 { color: var(--accent); margin-bottom: 15px; }
+        .exp-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
+
+        /* --- SCROLL INDICATOR --- */
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            font-size: 10px;
+            letter-spacing: 3px;
+            color: var(--text-dim);
+            text-transform: uppercase;
         }
+
     </style>
 </head>
 <body>
 
-    <div class="bg-text">CRICORDA</div>
-
     <nav>
-        <div class="logo">CRI // 26</div>
-        <div>AVAILABILITY: OPEN</div>
+        <div style="font-weight: 800; font-size: 14px; padding: 0 15px; border-right: 1px solid var(--border);">CRI_</div>
+        <a href="#home" class="nav-item active">Home</a>
+        <a href="#about" class="nav-item">About</a>
+        <a href="#work" class="nav-item">Portfolio</a>
+        <a href="#contact" class="nav-item">Contact</a>
+        <a href="#" class="nav-item nav-hire">Hire Me</a>
     </nav>
 
-    <section class="hero">
-        <h1>ROBLOX<br>SYSTEMS</h1>
-        <div class="hero-meta">
-            <p style="max-width: 300px; font-weight: 300; text-transform: uppercase; letter-spacing: 2px;">Architecting the core of high-concurrency experiences.</p>
-            <p>[ SCROLL TO ENTER ]</p>
+    <main class="hero" id="home">
+        <div class="status-pill">
+            <div class="status-dot"></div>
+            <span>$ status -- available</span>
+        </div>
+        
+        <h1>Roblox Systems<br>Engineering</h1>
+        
+        <p>Reliable, modular code with scalable architecture. Specialized in delivering performance-optimized systems for the next generation of Roblox games.</p>
+        
+        <div class="btn-group">
+            <a href="#work" class="btn btn-primary">Portfolio</a>
+            <a href="#contact" class="btn btn-secondary">Contact</a>
+        </div>
+
+        <div class="scroll-down">Scroll to explore</div>
+    </main>
+
+    <section id="about">
+        <div class="section-header">
+            <h2>Expertise</h2>
+            <div></div>
+            <p style="color: var(--text-dim); margin-top: 15px;">Technical skills and development focus</p>
+        </div>
+
+        <div class="expertise-grid">
+            <div class="exp-card">
+                <h3>Lua Scripting</h3>
+                <p>Engineering complex game logic, data management, inventory systems, and responsive UIs with high efficiency.</p>
+            </div>
+            <div class="exp-card">
+                <h3>Game Design</h3>
+                <p>Designing and balancing core mechanics, economy systems, and player progression loops to maximize retention.</p>
+            </div>
+            <div class="exp-card">
+                <h3>Backend Systems</h3>
+                <p>Senior-level integration of ProfileStore, cross-server communication, and optimized DataStore wrappers.</p>
+            </div>
         </div>
     </section>
-
-    <div class="scroll-container">
-        <div class="work-card">
-            <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
-            </video>
-            <h3 class="card-title">SENSORY AI</h3>
-        </div>
-
-        <div class="work-card">
-            <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
-            </video>
-            <h3 class="card-title">COMBAT OOP</h3>
-        </div>
-
-        <div class="work-card">
-            <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                <source src="assets/videos/FishingSystemPortfolio.mp4" type="video/mp4">
-            </video>
-            <h3 class="card-title">WORLD LOGIC</h3>
-        </div>
-    </div>
-
-    <section class="contact">
-        <h2>CONNECT</h2>
-        <a href="#" class="discord-btn">DISCORD: CRI.CORDA</a>
-    </section>
-
-    <footer style="padding: 40px; text-align: center; font-size: 10px; opacity: 0.3; letter-spacing: 5px;">
-        EST. 2022 // LOGIC OVER MAGIC
-    </footer>
 
 </body>
 </html>
