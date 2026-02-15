@@ -65,6 +65,47 @@
             font-weight: 700;
         }
 
+        .experience-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--accent-glow);
+            padding: 10px 24px;
+            border-radius: 100px;
+            margin-bottom: 25px;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 1px;
+        }
+
+        .experience-badge .role {
+            color: var(--text-dim);
+            font-size: 13px;
+            font-weight: 400;
+        }
+    
+        .experience-badge .company {
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 15px;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+    
+        .experience-badge .divider {
+            color: var(--accent);
+            font-weight: 800;
+        }
+    
+        .experience-badge .impact {
+            background: var(--accent);
+            color: #000;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 900;
+            margin-left: 5px;
+        }
+        
         /* --- CENTERED HERO --- */
         .hero {
             height: 100vh;
@@ -108,6 +149,8 @@
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 40px;
+            margin-top: 0;
+            opacity: 0.8;
         }
 
         /* --- BUTTONS --- */
@@ -364,13 +407,20 @@
         
         <h1>Roblox Systems<br>Engineering</h1>
         
-        <p>Reliable, modular code with scalable architecture. Senior developer at Unreal X Games with experience managing systems for 180K+ members.</p>
+        <div class="experience-badge">
+            <span class="role">SENIOR DEVELOPER</span>
+            <span class="divider">@</span>
+            <span class="company">UNREAL X GAMES</span>
+            <span class="impact">180K+ MEMBERS</span>
+        </div>
+        
+        <p>Reliable, modular code with scalable architecture. Specialized in delivering performance-optimized systems for high-concurrency experiences.</p>
         
         <div class="btn-group">
             <a href="#work" class="btn btn-primary">My Works</a>
             <a href="#contact" class="btn btn-secondary">Hire Me</a>
         </div>
-
+    
         <div class="scroll-down">Scroll to explore</div>
     </main>
 
