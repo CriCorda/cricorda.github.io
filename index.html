@@ -3,167 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricorda | Overview</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bento&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>CRICORDA // OVERRIDE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syne:wght@800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #f5f5f7;
-            --card: #ffffff;
-            --text: #1d1d1f;
-            --accent: #0071e3;
-            --radius: 24px;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background-color: var(--bg); 
-            color: var(--text); 
-            font-family: 'Inter', sans-serif; 
-            padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: auto;
-            gap: 20px;
-        }
-
-        /* --- BENTO CARD BASE --- */
-        .card {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease;
-        }
-        .card:hover { transform: translateY(-5px); }
-
-        /* --- SPECIFIC TILES --- */
-        .hero {
-            grid-column: span 3;
-            background: linear-gradient(135deg, #0071e3, #40a9ff);
-            color: white;
-        }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
         
-        .stat { grid-column: span 1; text-align: center; justify-content: center; }
-        .stat-num { font-size: 3rem; font-weight: 800; color: var(--accent); }
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
 
-        .video-card {
-            grid-column: span 2;
-            padding: 0;
+        /* --- AMBIENT BACKGROUND --- */
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000 100%);
+            z-index: -1;
+        }
+
+        /* --- FLOATING HUD ELEMENTS --- */
+        .hud-frame {
+            position: absolute;
+            inset: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .wrapper {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5%;
+        }
+
+        .main-card {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            position: relative;
+        }
+
+        .hero-text h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            line-height: 0.8;
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom, #fff 40%, rgba(255,255,255,0.1));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* --- THE "STYLE" (REEL) --- */
+        .project-reel {
+            height: 500px;
+            overflow-y: scroll;
+            padding-right: 20px;
+            mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+        }
+
+        .project-reel::-webkit-scrollbar { width: 2px; }
+        .project-reel::-webkit-scrollbar-thumb { background: #fff; }
+
+        .reel-item {
+            margin-bottom: 60px;
+            opacity: 0.4;
+            transition: 0.5s;
+            transform: scale(0.9);
+            transform-origin: left;
+        }
+
+        .reel-item:hover { opacity: 1; transform: scale(1); }
+
+        .video-container {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #111;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
             overflow: hidden;
             position: relative;
-            background: #000;
-        }
-        .video-card video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-        }
-        .video-label {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(255,255,255,0.9);
-            padding: 8px 15px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 600;
         }
 
-        .about { grid-column: span 2; line-height: 1.6; }
-        
-        .discord-card {
-            grid-column: span 2;
-            background: #5865F2;
-            color: white;
-            flex-direction: row;
-            align-items: center;
-            gap: 20px;
-        }
+        .video-container video { width: 100%; height: 100%; object-fit: cover; }
 
-        .tech-pill {
-            background: var(--bg);
-            padding: 8px 16px;
-            border-radius: 100px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin: 4px;
-            display: inline-block;
-        }
+        .item-info { display: flex; justify-content: space-between; align-items: flex-end; }
+        .item-info h3 { font-size: 1.5rem; text-transform: uppercase; }
+        .item-info span { font-size: 0.7rem; color: #666; }
 
-        /* --- RESPONSIVE --- */
+        /* --- CONTACT PILL --- */
+        .uplink {
+            position: fixed;
+            bottom: 60px;
+            left: 60px;
+            background: #fff;
+            color: #000;
+            padding: 15px 30px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .uplink:hover { letter-spacing: 5px; background: #ff0055; color: #fff; }
+
         @media (max-width: 900px) {
-            .container { grid-template-columns: repeat(2, 1fr); }
-            .hero { grid-column: span 2; }
+            .main-card { grid-template-columns: 1fr; }
+            .project-reel { height: auto; overflow: visible; mask-image: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="card hero">
-            <div>
-                <p style="text-transform: uppercase; font-weight: 600; opacity: 0.8;">Roblox Engineer</p>
-                <h1>Cricorda.</h1>
+    <div id="canvas-container"></div>
+    
+    <div class="hud-frame">
+        <div>CRICORDA // ENG.LOG</div>
+        <div>STABLE_CONNECTION // 2026</div>
+    </div>
+
+    <div class="wrapper">
+        <div class="main-card">
+            
+            <div class="hero-text">
+                <span style="color: #ff0055; font-weight: 700; letter-spacing: 5px;">[ STATUS: ACTIVE ]</span>
+                <h1>ENGINE<br>CRITICAL</h1>
+                <p style="max-width: 400px; color: #888; font-size: 1.1rem; line-height: 1.5; margin-top: 20px;">
+                    Developing high-concurrency systems and modular Luau frameworks for top-tier Roblox experiences.
+                </p>
+                
+                <div style="margin-top: 40px; display: flex; gap: 30px; color: #444; font-weight: 700;">
+                    <div>180K+<br><span style="font-size: 10px; font-weight: 300;">MEMBERS</span></div>
+                    <div>OOP<br><span style="font-size: 10px; font-weight: 300;">ARCHITECTURE</span></div>
+                    <div>PROFILES<br><span style="font-size: 10px; font-weight: 300;">OPTIMIZED</span></div>
+                </div>
             </div>
-            <p style="font-size: 1.2rem; max-width: 400px; opacity: 0.9;">I build modular, high-performance systems for the next generation of Roblox experiences.</p>
-        </div>
 
-        <div class="card stat">
-            <p style="font-weight: 600;">Reach</p>
-            <div class="stat-num">180K+</div>
-            <p style="font-size: 0.8rem; color: #666;">Community Members</p>
-        </div>
+            <div class="project-reel">
+                <div class="reel-item">
+                    <div class="video-container">
+                        <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="item-info">
+                        <h3>Sensory AI</h3>
+                        <span>001 // SYSTEM</span>
+                    </div>
+                </div>
 
-        <div class="card video-card">
-            <video autoplay muted loop>
-                <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
-            </video>
-            <div class="video-label">AI Sensory System</div>
-        </div>
+                <div class="reel-item">
+                    <div class="video-container">
+                        <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="item-info">
+                        <h3>Ability Framework</h3>
+                        <span>002 // COMBAT</span>
+                    </div>
+                </div>
 
-        <div class="card about">
-            <h3 style="margin-bottom: 15px;">Core Expertise</h3>
-            <div>
-                <span class="tech-pill">Luau OOP</span>
-                <span class="tech-pill">ProfileStore</span>
-                <span class="tech-pill">Combat Frameworks</span>
-                <span class="tech-pill">Datastore Optimization</span>
-                <span class="tech-pill">Modular Arch</span>
+                <div class="reel-item">
+                    <div class="video-container">
+                        <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                            <source src="assets/videos/FishingSystemPortfolio.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="item-info">
+                        <h3>World Interaction</h3>
+                        <span>003 // LOGIC</span>
+                    </div>
+                </div>
             </div>
-            <p style="margin-top: 20px; color: #444;">Specializing in the bridge between complex backend logic and seamless player interaction.</p>
-        </div>
 
-        <div class="card video-card">
-            <video autoplay muted loop>
-                <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
-            </video>
-            <div class="video-label">Dash & VFX Framework</div>
-        </div>
-
-        <div class="card discord-card">
-            <div style="font-size: 3rem;">👾</div>
-            <div>
-                <p style="font-weight: 600; opacity: 0.9;">Available for Hire</p>
-                <h2 style="font-size: 1.8rem;">cri.corda</h2>
-            </div>
-        </div>
-
-        <div class="card" style="grid-column: span 2; background: #1d1d1f; color: white;">
-            <h3>Senior Contributor</h3>
-            <p style="opacity: 0.7; margin-top: 10px;">Unreal X Games // +1 Studios</p>
-            <a href="#" style="color: #40a9ff; margin-top: 20px; text-decoration: none; font-weight: 600;">View Profile →</a>
         </div>
     </div>
 
+    <a href="#" class="uplink">DISCORD: CRI.CORDA</a>
+
+    <script>
+        // Simple background movement
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.getElementById('canvas-container').style.background = 
+                `radial-gradient(circle at ${x * 100}% ${y * 100}%, #1a050d 0%, #000 100%)`;
+        });
+    </script>
 </body>
 </html>
