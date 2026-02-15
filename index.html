@@ -3,655 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricorda | Roblox Developer Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Cricorda | Roblox Scripting Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #1a1a2e;
-            --card-dark: #2a2a4a;
-            --primary-accent: #00bcd4; /* Light blue/green for accents */
-            --secondary-accent: #ffd700; /* Yellow for highlights */
-            --text-light: #e0e0e0;
-            --text-muted: #a0a0b0;
-            --border-color: #3f3f6f;
+            --bg-deep: #05070a;
+            --bg-card: rgba(10, 12, 18, 0.8);
+            --accent-glow: #00e5ff;
+            --accent-secondary: #ffd700;
+            --text-main: #f0f0f0;
+            --text-dim: #94a3b8;
+            --border-glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
             line-height: 1.6;
-            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* Navigation */
-        .navbar {
+        /* --- Background Particles --- */
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #0a111a 0%, #05070a 100%);
+        }
+
+        /* --- Navigation --- */
+        nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 8%;
-            background-color: rgba(26, 26, 46, 0.95);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-            position: sticky;
+            padding: 20px 8%;
+            position: fixed;
+            width: 100%;
             top: 0;
             z-index: 1000;
+            background: rgba(5, 7, 10, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-glass);
         }
-        .navbar .logo {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            color: var(--text-light);
-            letter-spacing: 1px;
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
             text-decoration: none;
+            color: var(--text-main);
         }
-        .navbar .logo span {
-            color: var(--primary-accent);
-        }
-        .navbar ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
+
+        .logo span { color: var(--accent-glow); }
+
+        .nav-links {
             display: flex;
             gap: 30px;
-        }
-        .navbar ul li a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            padding: 5px 0;
-            position: relative;
-        }
-        .navbar ul li a::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 0;
-            height: 3px;
-            background-color: var(--primary-accent);
-            transition: width 0.3s ease;
-        }
-        
-        /* This triggers the underline when the JS adds the class */
-        .navbar ul li a:hover::after,
-        .navbar ul li a.active::after {
-            width: 100%;
+            list-style: none;
         }
 
-        /* Hero Section */
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-transform: lowercase;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--accent-glow); }
+
+        /* --- Hero Section --- */
         .hero {
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 80vh;
+            align-items: center;
             text-align: center;
-            padding: 80px 10%;
-            background: linear-gradient(135deg, var(--bg-dark) 0%, #0d0d1a 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before { 
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 50%, rgba(0,188,212,0.1) 0%, transparent 70%);
-            animation: rotateBackground 20s linear infinite;
+            padding: 0 20px;
         }
 
-        @keyframes rotateBackground {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .status-badge {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--accent-glow);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--accent-glow);
+            margin-bottom: 25px;
+            font-family: 'Space Grotesk', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .hero-content {
-            z-index: 10;
-            max-width: 900px;
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-glow);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-glow);
+            animation: pulse 2s infinite;
         }
-        .hero-content h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            color: var(--primary-accent);
-            margin-bottom: 10px;
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.1;
         }
-        .hero-content h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 72px;
-            font-weight: 900;
-            margin: 10px 0;
-            color: var(--text-light);
-        }
-        .hero-content h1 span {
-            color: var(--secondary-accent);
-        }
-        .hero-content p {
-            font-size: 24px;
-            color: var(--text-muted);
+
+        .hero p {
+            color: var(--text-dim);
+            max-width: 600px;
+            font-size: 1.1rem;
             margin-bottom: 40px;
         }
-        .hero-buttons {
+
+        .cta-group {
             display: flex;
-            justify-content: center;
-            gap: 25px;
+            gap: 20px;
         }
+
         .btn {
-            padding: 15px 40px;
-            border-radius: 50px;
+            padding: 12px 35px;
+            border-radius: 5px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-        .btn-primary {
-            background-color: var(--primary-accent);
-            color: var(--bg-dark);
-            border: 2px solid var(--primary-accent);
-        }
-        .btn-primary:hover {
-            background-color: transparent;
-            color: var(--primary-accent);
-            transform: translateY(-5px);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-light);
-            border: 2px solid var(--text-light);
-        }
-        .btn-secondary:hover {
-            background-color: var(--text-light);
-            color: var(--bg-dark);
-            transform: translateY(-5px);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.4s;
+            font-family: 'Space Grotesk', sans-serif;
         }
 
-        /* General Section Styles */
+        .btn-main {
+            background: var(--text-main);
+            color: var(--bg-deep);
+        }
+
+        .btn-main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--text-main);
+        }
+
+        /* --- Sections --- */
         section {
-            padding: 80px 10%;
+            padding: 100px 10%;
+            max-width: 1400px;
             margin: 0 auto;
-            max-width: 1200px;
-        }
-        .section-header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-header h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 48px;
-            font-weight: 900;
-            color: var(--text-light);
-            position: relative;
-            display: inline-block;
-        }
-        .section-header h2::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: -15px;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 5px;
-            background-color: var(--secondary-accent);
-            border-radius: 3px;
-        }
-        .section-header p {
-            font-size: 18px;
-            color: var(--text-muted);
-            margin-top: 20px;
         }
 
-        /* About Section */
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-        .about-image {
-            flex: 1;
-            min-width: 200px;
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
             text-align: center;
         }
-        .about-image img {
-            width: 240px;
-            height: 240px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid var(--primary-accent);
-            box-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
-        }
-        .about-text {
-            flex: 2;
-            min-width: 300px;
-        }
-        .about-text h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 32px;
-            color: var(--secondary-accent);
-            margin-bottom: 20px;
-        }
-        .about-text p {
-            font-size: 17px;
-            color: var(--text-light);
-            margin-bottom: 15px;
-        }
 
-        /* Skills Section */
-        .skills-grid {
+        /* --- Expertise Cards --- */
+        .skills-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-top: 40px;
-        }
-        .skill-card {
-            background-color: var(--card-dark);
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--border-color);
-        }
-        .skill-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
-            border-color: var(--primary-accent);
-        }
-        .skill-card h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
-            color: var(--primary-accent);
-            margin-bottom: 15px;
-        }
-        .skill-card p {
-            font-size: 16px;
-            color: var(--text-muted);
         }
 
-        /* Portfolio Section */
+        .skill-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 40px;
+            border-radius: 15px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent-glow);
+            transform: translateY(-5px);
+        }
+
+        .skill-card h3 {
+            color: var(--accent-glow);
+            margin-bottom: 15px;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- Portfolio Grid --- */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 35px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
         }
-        .portfolio-item {
-            background-color: var(--card-dark);
-            border-radius: 15px;
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-glass);
         }
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
-        }
-        .portfolio-item img {
+
+        .project-card video, .project-card img {
             width: 100%;
-            height: 250px;
-            object-fit: cover;
             display: block;
+            border-bottom: 1px solid var(--border-glass);
         }
-        .portfolio-info {
+
+        .project-info {
             padding: 25px;
-            text-align: center;
         }
-        .portfolio-info h3 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            color: var(--secondary-accent);
+
+        .project-info h4 {
             margin-bottom: 10px;
-        }
-        .portfolio-info p {
-            font-size: 15px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-        .portfolio-info .view-btn {
-            display: inline-block;
-            background-color: var(--primary-accent);
-            color: var(--bg-dark);
-            padding: 10px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 15px;
-            transition: background-color 0.3s ease;
-        }
-        .portfolio-info .view-btn:hover {
-            background-color: var(--secondary-accent);
-            color: var(--bg-dark);
+            font-size: 1.2rem;
         }
 
-        /* Footer */
+        .project-info p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* --- Footer --- */
         footer {
+            padding: 50px 10%;
             text-align: center;
-            padding: 40px 10%;
-            background-color: #121223;
-            border-top: 1px solid var(--border-color);
-            margin-top: 60px;
-            color: var(--text-muted);
-            font-size: 15px;
+            border-top: 1px solid var(--border-glass);
+            color: var(--text-dim);
+            font-size: 0.8rem;
         }
 
-/* Full-width Commission Banner */
-        .commission-banner {
-            width: 100%;
-            background: linear-gradient(90deg, #1b5e20 0%, #4caf50 50%, #1b5e20 100%);
-            background-size: 200% auto;
-            padding: 25px 0;
-            text-align: center;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
-            animation: gradientMove 4s ease infinite;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-        
-        .commission-banner h2 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .commission-banner p {
-            margin: 0;
-            font-weight: 600;
-            font-size: 16px;
-            opacity: 0.9;
-        }
-        
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        /* Adjusting section spacing to accommodate the banner */
-        #about {
-            padding-top: 60px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .navbar { padding: 15px 5%; }
-            .hero-content h1 { font-size: 60px; }
-            .hero-content p { font-size: 20px; }
-            .section-header h2 { font-size: 40px; }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
         }
 
         @media (max-width: 768px) {
-            .navbar { flex-direction: column; gap: 15px; }
-            .navbar ul { display: none; }
-            .hero { padding: 60px 5%; }
-            .hero-content h1 { font-size: 45px; }
-            .hero-content p { font-size: 18px; }
-            .hero-buttons { flex-direction: column; gap: 15px; }
-            .btn { width: 80%; }
-            .about-content { flex-direction: column; text-align: center; }
-            .about-image { margin-bottom: 30px; }
-            .section-header h2 { font-size: 35px; }
-            .skills-grid, .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 3rem; }
+            .cta-group { flex-direction: column; width: 100%; }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="#" class="logo">CRI<span>CORDA</span></a>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About Me</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact">Contact</a></li>
+    <canvas id="canvas-bg"></canvas>
+
+    <nav>
+        <a href="#" class="logo">● CRI<span>CORDA</span></a>
+        <ul class="nav-links">
+            <li><a href="#home">home</a></li>
+            <li><a href="#about">about</a></li>
+            <li><a href="#expertise">expertise</a></li>
+            <li><a href="#portfolio">portfolio</a></li>
+            <li><a href="#contact">contact</a></li>
         </ul>
+        <a href="#contact" class="btn btn-outline" style="padding: 8px 20px;">hire me</a>
     </nav>
 
     <section class="hero" id="home">
-        <div class="hero-content">
-            <h2>WELCOME TO MY SPACE</h2>
-            <h1>Hi, I'm <span>Cricorda.</span></h1>
-            <p>A Passionate Roblox Developer</p>
-            <div class="hero-buttons">
-                <a href="#contact" class="btn btn-primary">HIRE ME</a>
-                <a href="#portfolio" class="btn btn-secondary">MY WORKS</a>
-            </div>
+        <div class="status-badge">
+            <div class="status-dot"></div>
+            status — available
+        </div>
+        <h1>Roblox<br><span style="color: var(--accent-glow);">Scripting Services</span></h1>
+        <p>Reliable, clean code with scalable architecture. Years of experience delivering performance optimized systems for Roblox games.</p>
+        <div class="cta-group">
+            <a href="#portfolio" class="btn btn-main">portfolio</a>
+            <a href="#contact" class="btn btn-outline">contact</a>
         </div>
     </section>
-
-    <div class="commission-banner">
-        <h2>COMMISSIONS ARE OPEN</h2>
-        <p>High-Quality Systems & Gameplay Engineering • Discord: cri.corda</p>
-    </div>
 
     <section id="about">
-        <div class="section-header">
-            <h2>About Me</h2>
-            <p>Developing immersive experiences on the Roblox platform</p>
-        </div>
-        <div class="about-content">
-            <div class="about-image">
-                <img src="assets/images/WillyFromBelairHeadshot.png" alt="Cricorda's Image">
-            </div>
-            <div class="about-text">
-                <h3>Creative Problem Solver & Developer</h3>
-                <p>Since 2022, I have been deeply involved in creating engaging worlds and interactive experiences on Roblox. What began as a curiosity for building has evolved into a dedicated passion for Lua scripting and game design.</p>
-                <p>I specialize in developing simulators, RPGs, and advanced modular systems that are built to scale. I am constantly seeking new challenges to push my technical boundaries and deliver unforgettable gameplay for the community.</p>
-                <p>Feel free to explore my portfolio below to see my recent work. I am currently open to collaborations and professional commissions!</p>
-                <div style="border-left: 4px solid var(--secondary-accent); padding: 10px 15px; margin: 25px 0; background: rgba(255, 215, 0, 0.05); border-radius: 0 8px 8px 0;">
-                    <p style="margin: 0; font-weight: 700; font-size: 18px;">
-                        ⭐ Developer at 
-                        <a href="https://www.roblox.com/communities/6991689/Unreal-X-Games#!/about" 
-                           target="_blank" 
-                           style="color: var(--primary-accent); text-decoration: none; border-bottom: 1px dashed var(--primary-accent); transition: 0.3s;">
-                           Unreal X Games
-                        </a> 
-                        <span style="color: var(--text-muted); font-size: 16px; font-weight: 400; margin-left: 5px;">
-                            (180K+ Members)
-                        </span>
-                    </p>
-                </div>
-                <div style="border-left: 4px solid var(--secondary-accent); padding: 10px 15px; margin: 25px 0; background: rgba(255, 215, 0, 0.05); border-radius: 0 8px 8px 0;">
-                    <p style="margin: 0; font-weight: 700; font-size: 18px;">
-                        ⭐ Developer at 
-                        <a href="https://www.roblox.com/communities/392445091/1-tudios#!/about" 
-                           target="_blank" 
-                           style="color: var(--primary-accent); text-decoration: none; border-bottom: 1px dashed var(--primary-accent); transition: 0.3s;">
-                           +1 Studios
-                        </a> 
-                        <span style="color: var(--text-muted); font-size: 16px; font-weight: 400; margin-left: 5px;">
-                            (10K+ Members)
-                        </span>
-                    </p>
-                </div>
+        <div class="skill-card" style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
+            <img src="assets/images/WillyFromBelairHeadshot.png" alt="Profile" style="width: 150px; border-radius: 50%; border: 2px solid var(--accent-glow);">
+            <div style="flex: 1; min-width: 300px;">
+                <h3 style="color: var(--text-main)">About the Developer</h3>
+                <p>Since 2022, I've specialized in <strong>Lua Scripting</strong> and <strong>Game Design</strong>. Currently contributing to <span style="color: var(--accent-secondary)">Unreal X Games (180K+)</span> and <span style="color: var(--accent-secondary)">+1 Studios</span>. My focus is on creating modular, high-performance systems that don't just work—they scale.</p>
             </div>
         </div>
     </section>
 
-    <section id="skills">
-        <div class="section-header">
-            <h2>Expertise</h2>
-            <p>Technical skills and development focus</p>
-        </div>
-        <div class="skills-grid">
+    <section id="expertise">
+        <h2 class="section-title">Expertise</h2>
+        <div class="skills-container">
             <div class="skill-card">
-                <h3>Lua Scripting</h3>
-                <p>Engineering complex game logic, data management, inventory systems, and responsive UIs.</p>
+                <h3>Technical Scripting</h3>
+                <p>Advanced OOP, ProfileStore, Data Management, and Modular Frameworks (Janitor, Promise).</p>
             </div>
             <div class="skill-card">
-                <h3>Game Design</h3>
-                <p>Designing and balancing core mechanics, economy systems, and player progression loops.</p>
+                <h3>Game Systems</h3>
+                <p>Designing combat mechanics, RPG quest systems, AI pathfinding, and economy balancing.</p>
             </div>
-        </div>
-
-        <div class="skills-icons" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px;">
-            <div class="skill-badge" style="background: rgba(0, 188, 212, 0.1); border: 1px solid var(--primary-accent); padding: 10px 20px; border-radius: 8px;">
-                <span style="color: var(--primary-accent); font-weight: bold;">Modular Architecture</span>
-            </div>
-            <div class="skill-badge" style="background: rgba(0, 188, 212, 0.1); border: 1px solid var(--primary-accent); padding: 10px 20px; border-radius: 8px;">
-                <span style="color: var(--primary-accent); font-weight: bold;">ProfileStore</span>
-            </div>
-            <div class="skill-badge" style="background: rgba(0, 188, 212, 0.1); border: 1px solid var(--primary-accent); padding: 10px 20px; border-radius: 8px;">
-                <span style="color: var(--primary-accent); font-weight: bold;">OOP (Object Oriented)</span>
-            </div>
-            <div class="skill-badge" style="background: rgba(0, 188, 212, 0.1); border: 1px solid var(--primary-accent); padding: 10px 20px; border-radius: 8px;">
-                <span style="color: var(--primary-accent); font-weight: bold;">DataStores</span>
-            </div>
-            <div class="skill-badge" style="background: rgba(0, 188, 212, 0.1); border: 1px solid var(--primary-accent); padding: 10px 20px; border-radius: 8px;">
-                <span style="color: var(--primary-accent); font-weight: bold;">Janitor</span>
-            </div>
-            <div class="skill-badge" style="background: rgba(0, 188, 212, 0.1); border: 1px solid var(--primary-accent); padding: 10px 20px; border-radius: 8px;">
-                <span style="color: var(--primary-accent); font-weight: bold;">Promise</span>
+            <div class="skill-card">
+                <h3>Scalable UI</h3>
+                <p>Responsive interface engineering with clean animations and optimized client-server communication.</p>
             </div>
         </div>
     </section>
 
     <section id="portfolio">
-        <div class="section-header">
-            <h2>My Projects</h2>
-            <p>A selection of my best works on Roblox</p>
-        </div>
-        
+        <h2 class="section-title">Selected Works</h2>
         <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="assets/images/SpeedCartImage.png" alt="Speed Cart Escape">
-                <div class="portfolio-info">
-                    <h3>Speed Cart Escape</h3>
-                    <p>Contributed as head scripter to the creation of this simulator.</p>
-                    <a href="https://www.roblox.com/games/134331529448204/1-Speed-Cart-Escape" class="view-btn" target="_blank">View on Roblox</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="section-header" style="margin-top: 80px; margin-bottom: 40px;">
-            <h3 style="font-family: 'Montserrat', sans-serif; font-size: 32px; color: var(--primary-accent);">Systems Showcase</h3>
-            <p>Technical demonstrations of my custom-coded systems</p>
-        </div>
-        
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <video width="100%" controls poster="assets/images/DashThumbnailPortfolio.png">
+            <div class="project-card">
+                <video muted loop onmouseover="this.play()" onmouseout="this.pause()" poster="assets/images/DashThumbnailPortfolio.png">
                     <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
-                <div class="portfolio-info">
-                    <h3>Advanced Ability System (Dash)</h3>
-                    <p>A modular system that implements various types of abilities (dash with after images in this video).</p>
+                <div class="project-info">
+                    <h4>Advanced Ability System</h4>
+                    <p>Modular dash system with after-image effects.</p>
                 </div>
             </div>
-        
-            <div class="portfolio-item">
-                <video width="100%" controls poster="assets/images/SpeedCartSystemPortfolioImage.png">
-                    <source src="assets/videos/GeneralSystemsCartPortfolio.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="portfolio-info">
-                    <h3>Speed Cart Simulator</h3>
-                    <p>A showcase of some of the systems i introduced in this simulator.</p>
-                </div>
-            </div>
-
-            <div class="portfolio-item">
-                <video width="100%" controls poster="assets/images/QuestsSystemPortfolioImage.png">
-                    <source src="assets/videos/QuestSystemPortfolio.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="portfolio-info">
-                    <h3>Quest System</h3>
-                    <p>A basic OOP system to handle quests (like reach a point in this case).</p>
-                </div>
-            </div>
-
-            <div class="portfolio-item">
-                <video width="100%" controls>
-                    <source src="assets/videos/CombatSystemPortfolio.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="portfolio-info">
-                    <h3>Basic Combat System</h3>
-                    <p>A demonstration of a basic combat system.</p>
-                </div>
-            </div>
-
-            <div class="portfolio-item">
-                <video width="100%" controls poster="assets/images/PathfindingAIPortfolioImage.png">
+            <div class="project-card">
+                <video muted loop onmouseover="this.play()" onmouseout="this.pause()" poster="assets/images/PathfindingAIPortfolioImage.png">
                     <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
-                <div class="portfolio-info">
-                    <h3>State-Based Pathfinding AI</h3>
-                    <p>A demonstration of a state-based pathfinding AI (with state machine, sensory system and dynamic pathfinding), with FOV and Last Known Position Memory.</p>
+                <div class="project-info">
+                    <h4>State-Based AI</h4>
+                    <p>Dynamic pathfinding with FOV and memory systems.</p>
                 </div>
             </div>
-
-            <div class="portfolio-item">
-                <video width="100%" controls>
-                    <source src="assets/videos/FishingSystemPortfolio.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="portfolio-info">
-                    <h3>Fishing System</h3>
-                    <p>A demonstration of a fishing system (like the one in Grand Piece).</p>
+            <div class="project-card">
+                <img src="assets/images/SpeedCartImage.png" alt="Speed Cart">
+                <div class="project-info">
+                    <h4>Speed Cart Escape</h4>
+                    <p>Head Scripter for a popular simulator experience.</p>
                 </div>
             </div>
         </div>
     </section>
-    
-    <section id="contact">
-        <div class="section-header">
-            <h2>Get In Touch</h2>
-            <p>Available for commissions and team collaborations</p>
-        </div>
-        <div style="text-align: center;">
-            <p>Looking for a developer for your next project? Let's talk!</p>
-            <p style="font-size: 22px; font-weight: 700; color: var(--secondary-accent); margin-bottom: 20px;">Discord: cri.corda</p>
-            <div style="margin-top: 20px;">
-                <a href="https://www.roblox.com/users/3421735484/profile" class="btn btn-primary" target="_blank">Visit Roblox Profile</a>
-            </div>
+
+    <section id="contact" style="text-align: center;">
+        <h2 class="section-title">Ready to build?</h2>
+        <p style="margin-bottom: 30px;">Currently accepting commissions for high-quality systems.</p>
+        <div class="skill-card" style="display: inline-block; padding: 20px 50px;">
+            <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-glow);">Discord ID</p>
+            <h2 style="font-family: 'Space Grotesk';">cri.corda</h2>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Cricorda. All rights reserved.</p>
+        <p>&copy; 2026 CRICORDA. Built for performance.</p>
     </footer>
-    
-<script>
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".navbar ul li a");
 
-    window.addEventListener("scroll", () => {
-        let current = "";
+    <script>
+        // Simple Particle Background
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
 
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            // Checks if the scroll position is within the section (with a 150px offset)
-            if (pageYOffset >= sectionTop - 150) {
-                current = section.getAttribute("id");
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
             }
-        });
-
-        navLinks.forEach((link) => {
-            link.classList.remove("active");
-            if (link.getAttribute("href").includes(current)) {
-                link.classList.add("active");
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
             }
-        });
-    });
-</script>
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        createParticles();
+        animate();
+    </script>
 </body>
 </html>
