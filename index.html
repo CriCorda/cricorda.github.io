@@ -3,424 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricorda | Roblox Scripting Services</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Cricorda // Engineering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #05070a;
-            --bg-card: rgba(10, 12, 18, 0.8);
-            --accent-glow: #00e5ff;
-            --accent-secondary: #ffd700;
-            --text-main: #f0f0f0;
-            --text-dim: #94a3b8;
-            --border-glass: rgba(255, 255, 255, 0.1);
+            --bg: #0a0a0a;
+            --accent: #00ff66; /* Neon Matrix Green */
+            --text: #ffffff;
+            --text-dim: #666;
+            --surface: #111;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            line-height: 1.6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
+            line-height: 1.4;
         }
 
-        /* --- Background Particles --- */
-        #canvas-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #0a111a 0%, #05070a 100%);
-        }
-
-        /* --- Navigation --- */
+        /* --- STARK NAVIGATION --- */
         nav {
+            padding: 40px 6%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
-            position: fixed;
+            position: absolute;
             width: 100%;
-            top: 0;
-            z-index: 1000;
-            background: rgba(5, 7, 10, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-glass);
+            z-index: 100;
         }
-
-        .logo {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
+        .logo { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: 1.2rem; 
+            letter-spacing: -1px;
+        }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--text-dim); 
+            font-size: 0.8rem; 
+            text-transform: uppercase; 
             letter-spacing: 2px;
-            font-size: 1.2rem;
-            text-decoration: none;
-            color: var(--text-main);
-        }
-
-        .logo span { color: var(--accent-glow); }
-
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            text-transform: lowercase;
             transition: 0.3s;
         }
+        .nav-links a:hover { color: var(--accent); }
 
-        .nav-links a:hover { color: var(--accent-glow); }
-
-        /* --- Hero Section --- */
+        /* --- EDITORIAL HERO --- */
         .hero {
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             align-items: center;
-            text-align: center;
-            padding: 0 20px;
+            padding: 0 6%;
+            border-bottom: 1px solid #222;
         }
-
-        .status-badge {
-            background: rgba(0, 229, 255, 0.1);
-            border: 1px solid var(--accent-glow);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--accent-glow);
-            margin-bottom: 25px;
-            font-family: 'Space Grotesk', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .hero-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 0.9;
+            text-transform: uppercase;
         }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-glow);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-glow);
-            animation: pulse 2s infinite;
+        .hero-meta {
+            padding-left: 10%;
+            border-left: 1px solid var(--accent);
         }
+        .hero-meta p { font-size: 1.2rem; color: var(--text-dim); max-width: 400px; margin-bottom: 30px; }
 
-        .hero h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(2.5rem, 8vw, 5rem);
+        /* --- BOLD MARQUEE --- */
+        .marquee {
+            padding: 20px 0;
+            background: var(--accent);
+            color: #000;
+            overflow: hidden;
+            white-space: nowrap;
+            font-family: 'Syncopate', sans-serif;
             font-weight: 700;
-            margin-bottom: 15px;
-            line-height: 1.1;
-        }
-
-        .hero p {
-            color: var(--text-dim);
-            max-width: 600px;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
-
-        .cta-group {
+            font-size: 0.9rem;
             display: flex;
+        }
+        .marquee-content {
+            display: flex;
+            animation: scroll 20s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* --- ASYMMETRIC CONTENT --- */
+        section { padding: 120px 6%; }
+        .section-num { color: var(--accent); font-family: 'Syncopate'; font-size: 0.8rem; margin-bottom: 20px; display: block; }
+        
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 100px;
+        }
+
+        .expertise-list { list-style: none; }
+        .expertise-item {
+            padding: 40px 0;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .expertise-item h3 { font-size: 2rem; font-weight: 300; }
+        .expertise-item:hover h3 { color: var(--accent); padding-left: 20px; }
+        .expertise-item { transition: 0.4s; }
+
+        /* --- WORK TILES --- */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
             gap: 20px;
         }
-
-        .btn {
-            padding: 12px 35px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.4s;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .btn-main {
-            background: var(--text-main);
-            color: var(--bg-deep);
-        }
-
-        .btn-main:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-outline {
-            border: 1px solid var(--border-glass);
-            color: var(--text-main);
-            background: rgba(255,255,255,0.05);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: var(--text-main);
-        }
-
-        /* --- Sections --- */
-        section {
-            padding: 100px 10%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            text-align: center;
-        }
-
-        /* --- Expertise Cards --- */
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .skill-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            padding: 40px;
-            border-radius: 15px;
-            transition: 0.3s;
+        .work-item { 
+            background: #111; 
+            grid-column: span 6; 
             position: relative;
             overflow: hidden;
         }
-
-        .skill-card:hover {
-            border-color: var(--accent-glow);
-            transform: translateY(-5px);
-        }
-
-        .skill-card h3 {
-            color: var(--accent-glow);
-            margin-bottom: 15px;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        /* --- Portfolio Grid --- */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-glass);
-        }
-
-        .project-card video, .project-card img {
+        .work-item.large { grid-column: span 8; }
+        .work-item.small { grid-column: span 4; }
+        
+        .work-item video, .work-item img {
             width: 100%;
-            display: block;
-            border-bottom: 1px solid var(--border-glass);
+            height: 450px;
+            object-fit: cover;
+            filter: grayscale(1) brightness(0.7);
+            transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .work-item:hover video, .work-item:hover img {
+            filter: grayscale(0) brightness(1);
+            transform: scale(1.05);
+        }
+        .work-desc {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            pointer-events: none;
         }
 
-        .project-info {
-            padding: 25px;
-        }
-
-        .project-info h4 {
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
-
-        .project-info p {
-            font-size: 0.9rem;
-            color: var(--text-dim);
-        }
-
-        /* --- Footer --- */
-        footer {
-            padding: 50px 10%;
+        /* --- CONTACT --- */
+        .contact-box {
+            background: var(--surface);
+            padding: 100px;
             text-align: center;
-            border-top: 1px solid var(--border-glass);
-            color: var(--text-dim);
-            font-size: 0.8rem;
         }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
+        .contact-box h2 { font-family: 'Syncopate'; font-size: 4vw; margin-bottom: 40px; }
+        .discord-pill {
+            display: inline-block;
+            border: 1px solid var(--accent);
+            padding: 15px 40px;
+            border-radius: 100px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
         }
+        .discord-pill:hover { background: var(--accent); color: #000; }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 3rem; }
-            .cta-group { flex-direction: column; width: 100%; }
+        @media (max-width: 900px) {
+            .hero, .grid-layout { grid-template-columns: 1fr; }
+            .hero-meta { border-left: none; border-top: 1px solid var(--accent); padding: 40px 0; }
+            .work-item { grid-column: span 12 !important; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="canvas-bg"></canvas>
-
     <nav>
-        <a href="#" class="logo">● CRI<span>CORDA</span></a>
-        <ul class="nav-links">
-            <li><a href="#home">home</a></li>
-            <li><a href="#about">about</a></li>
-            <li><a href="#expertise">expertise</a></li>
-            <li><a href="#portfolio">portfolio</a></li>
-            <li><a href="#contact">contact</a></li>
-        </ul>
-        <a href="#contact" class="btn btn-outline" style="padding: 8px 20px;">hire me</a>
+        <div class="logo">CRICORDA //</div>
+        <div class="nav-links">
+            <a href="#work">Work</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
     </nav>
 
-    <section class="hero" id="home">
-        <div class="status-badge">
-            <div class="status-dot"></div>
-            status — available
-        </div>
-        <h1>Roblox<br><span style="color: var(--accent-glow);">Scripting Services</span></h1>
-        <p>Reliable, clean code with scalable architecture. Years of experience delivering performance optimized systems for Roblox games.</p>
-        <div class="cta-group">
-            <a href="#portfolio" class="btn btn-main">portfolio</a>
-            <a href="#contact" class="btn btn-outline">contact</a>
-        </div>
-    </section>
+    <main>
+        <section class="hero">
+            <h1 class="hero-title">Logic<br>Over<br>Magic</h1>
+            <div class="hero-meta">
+                <p>High-performance Roblox engineering. Modular systems built for the next generation of experiences.</p>
+                <a href="#work" class="nav-links" style="color:var(--accent); text-decoration: none; font-weight: bold;">VIEW ARCHIVE ↓</a>
+            </div>
+        </section>
 
-    <section id="about">
-        <div class="skill-card" style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
-            <img src="assets/images/WillyFromBelairHeadshot.png" alt="Profile" style="width: 150px; border-radius: 50%; border: 2px solid var(--accent-glow);">
-            <div style="flex: 1; min-width: 300px;">
-                <h3 style="color: var(--text-main)">About the Developer</h3>
-                <p>Since 2022, I've specialized in <strong>Lua Scripting</strong> and <strong>Game Design</strong>. Currently contributing to <span style="color: var(--accent-secondary)">Unreal X Games (180K+)</span> and <span style="color: var(--accent-secondary)">+1 Studios</span>. My focus is on creating modular, high-performance systems that don't just work—they scale.</p>
+        <div class="marquee">
+            <div class="marquee-content">
+                &nbsp; COMMISSIONS OPEN • 180K+ MEMBERS REACHED • UNREAL X GAMES • +1 STUDIOS • OOP ARCHITECTURE • LUAU EXPERT • &nbsp;
+                &nbsp; COMMISSIONS OPEN • 180K+ MEMBERS REACHED • UNREAL X GAMES • +1 STUDIOS • OOP ARCHITECTURE • LUAU EXPERT • &nbsp;
             </div>
         </div>
-    </section>
 
-    <section id="expertise">
-        <h2 class="section-title">Expertise</h2>
-        <div class="skills-container">
-            <div class="skill-card">
-                <h3>Technical Scripting</h3>
-                <p>Advanced OOP, ProfileStore, Data Management, and Modular Frameworks (Janitor, Promise).</p>
+        <section id="about" class="grid-layout">
+            <div>
+                <span class="section-num">01 / BACKGROUND</span>
+                <h2 style="font-size: 3rem; text-transform: uppercase; font-family: 'Syncopate';">The<br>Architect</h2>
             </div>
-            <div class="skill-card">
-                <h3>Game Systems</h3>
-                <p>Designing combat mechanics, RPG quest systems, AI pathfinding, and economy balancing.</p>
-            </div>
-            <div class="skill-card">
-                <h3>Scalable UI</h3>
-                <p>Responsive interface engineering with clean animations and optimized client-server communication.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolio">
-        <h2 class="section-title">Selected Works</h2>
-        <div class="portfolio-grid">
-            <div class="project-card">
-                <video muted loop onmouseover="this.play()" onmouseout="this.pause()" poster="assets/images/DashThumbnailPortfolio.png">
-                    <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
-                </video>
-                <div class="project-info">
-                    <h4>Advanced Ability System</h4>
-                    <p>Modular dash system with after-image effects.</p>
+            <div>
+                <p style="font-size: 1.5rem; font-weight: 300; margin-bottom: 40px;">
+                    I don't just "script" games. I build technical ecosystems. Based in the Roblox environment since 2022, I specialize in the bridge between complex backend logic and seamless player interaction.
+                </p>
+                <div class="expertise-list">
+                    <div class="expertise-item">
+                        <h3>System Architecture</h3>
+                        <span>ProfileStore / Data</span>
+                    </div>
+                    <div class="expertise-item">
+                        <h3>Gameplay Physics</h3>
+                        <span>Combat / Movement</span>
+                    </div>
+                    <div class="expertise-item">
+                        <h3>AI Engineering</h3>
+                        <span>State Machines</span>
+                    </div>
                 </div>
             </div>
-            <div class="project-card">
-                <video muted loop onmouseover="this.play()" onmouseout="this.pause()" poster="assets/images/PathfindingAIPortfolioImage.png">
-                    <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
-                </video>
-                <div class="project-info">
-                    <h4>State-Based AI</h4>
-                    <p>Dynamic pathfinding with FOV and memory systems.</p>
+        </section>
+
+        <section id="work">
+            <span class="section-num">02 / SELECTED WORKS</span>
+            <div class="work-grid">
+                <div class="work-item large">
+                    <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                        <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
+                    </video>
+                    <div class="work-desc">
+                        <h4 style="font-family: 'Syncopate';">PATHFINDING AI</h4>
+                        <p style="color: var(--accent);">Sensory & Memory Systems</p>
+                    </div>
+                </div>
+                <div class="work-item small">
+                    <img src="assets/images/SpeedCartImage.png" alt="Speed Cart">
+                    <div class="work-desc">
+                        <h4 style="font-family: 'Syncopate';">SIMULATOR ENGINE</h4>
+                        <p style="color: var(--accent);">Head Scripter</p>
+                    </div>
+                </div>
+                <div class="work-item small">
+                    <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                        <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
+                    </video>
+                    <div class="work-desc">
+                        <h4 style="font-family: 'Syncopate';">ABILITY SYSTEM</h4>
+                        <p style="color: var(--accent);">VFX & Logic</p>
+                    </div>
+                </div>
+                <div class="work-item large">
+                    <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                        <source src="assets/videos/FishingSystemPortfolio.mp4" type="video/mp4">
+                    </video>
+                    <div class="work-desc">
+                        <h4 style="font-family: 'Syncopate';">FISHING MECHANICS</h4>
+                        <p style="color: var(--accent);">Grand Piece Style</p>
+                    </div>
                 </div>
             </div>
-            <div class="project-card">
-                <img src="assets/images/SpeedCartImage.png" alt="Speed Cart">
-                <div class="project-info">
-                    <h4>Speed Cart Escape</h4>
-                    <p>Head Scripter for a popular simulator experience.</p>
-                </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact-box">
+                <span class="section-num" style="margin-bottom: 40px;">03 / CONNECT</span>
+                <h2>Let's build the future.</h2>
+                <a href="#" class="discord-pill">DISCORD: cri.corda</a>
+                <p style="margin-top: 40px; color: var(--text-dim);">Currently accepting high-level engineering roles.</p>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <section id="contact" style="text-align: center;">
-        <h2 class="section-title">Ready to build?</h2>
-        <p style="margin-bottom: 30px;">Currently accepting commissions for high-quality systems.</p>
-        <div class="skill-card" style="display: inline-block; padding: 20px 50px;">
-            <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-glow);">Discord ID</p>
-            <h2 style="font-family: 'Space Grotesk';">cri.corda</h2>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 CRICORDA. Built for performance.</p>
+    <footer style="padding: 40px 6%; border-top: 1px solid #222; display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;">
+        <div>© 2026 Cricorda Engineering</div>
+        <div>Built for the Roblox Platform</div>
     </footer>
 
-    <script>
-        // Simple Particle Background
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function initCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function createParticles() {
-            for (let i = 0; i < 100; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
-        createParticles();
-        animate();
-    </script>
 </body>
 </html>
