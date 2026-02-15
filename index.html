@@ -3,282 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cricorda // Engineering</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Cricorda | Source</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;500&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --accent: #00ff66; /* Neon Matrix Green */
-            --text: #ffffff;
-            --text-dim: #666;
-            --surface: #111;
+            --bg-main: #0d1117;
+            --bg-side: #010409;
+            --accent: #58a6ff;
+            --text-main: #c9d1d9;
+            --text-dim: #8b949e;
+            --border: #30363d;
+            --keyword: #ff7b72;
+            --string: #a5d6ff;
+            --function: #d2a8ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.4;
-        }
-
-        /* --- STARK NAVIGATION --- */
-        nav {
-            padding: 40px 6%;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: absolute;
-            width: 100%;
-            z-index: 100;
-        }
-        .logo { 
-            font-family: 'Syncopate', sans-serif; 
-            font-size: 1.2rem; 
-            letter-spacing: -1px;
-        }
-        .nav-links { display: flex; gap: 40px; }
-        .nav-links a { 
-            text-decoration: none; 
-            color: var(--text-dim); 
-            font-size: 0.8rem; 
-            text-transform: uppercase; 
-            letter-spacing: 2px;
-            transition: 0.3s;
-        }
-        .nav-links a:hover { color: var(--accent); }
-
-        /* --- EDITORIAL HERO --- */
-        .hero {
             height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            padding: 0 6%;
-            border-bottom: 1px solid #222;
+            overflow: hidden;
         }
-        .hero-title {
-            font-family: 'Syncopate', sans-serif;
-            font-size: clamp(3rem, 10vw, 8rem);
-            line-height: 0.9;
+
+        /* --- SIDEBAR (EXPLORER) --- */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-side);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            font-size: 13px;
+        }
+
+        .sidebar-header {
+            padding: 15px 20px;
             text-transform: uppercase;
-        }
-        .hero-meta {
-            padding-left: 10%;
-            border-left: 1px solid var(--accent);
-        }
-        .hero-meta p { font-size: 1.2rem; color: var(--text-dim); max-width: 400px; margin-bottom: 30px; }
-
-        /* --- BOLD MARQUEE --- */
-        .marquee {
-            padding: 20px 0;
-            background: var(--accent);
-            color: #000;
-            overflow: hidden;
-            white-space: nowrap;
-            font-family: 'Syncopate', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            display: flex;
-        }
-        .marquee-content {
-            display: flex;
-            animation: scroll 20s linear infinite;
-        }
-        @keyframes scroll {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
+            letter-spacing: 1px;
+            font-size: 11px;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--border);
         }
 
-        /* --- ASYMMETRIC CONTENT --- */
-        section { padding: 120px 6%; }
-        .section-num { color: var(--accent); font-family: 'Syncopate'; font-size: 0.8rem; margin-bottom: 20px; display: block; }
-        
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 100px;
+        .folder {
+            padding: 10px 20px;
+            color: var(--text-dim);
+            cursor: default;
         }
 
-        .expertise-list { list-style: none; }
-        .expertise-item {
-            padding: 40px 0;
-            border-bottom: 1px solid #222;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .expertise-item h3 { font-size: 2rem; font-weight: 300; }
-        .expertise-item:hover h3 { color: var(--accent); padding-left: 20px; }
-        .expertise-item { transition: 0.4s; }
-
-        /* --- WORK TILES --- */
-        .work-grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 20px;
-        }
-        .work-item { 
-            background: #111; 
-            grid-column: span 6; 
-            position: relative;
-            overflow: hidden;
-        }
-        .work-item.large { grid-column: span 8; }
-        .work-item.small { grid-column: span 4; }
-        
-        .work-item video, .work-item img {
-            width: 100%;
-            height: 450px;
-            object-fit: cover;
-            filter: grayscale(1) brightness(0.7);
-            transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .work-item:hover video, .work-item:hover img {
-            filter: grayscale(0) brightness(1);
-            transform: scale(1.05);
-        }
-        .work-desc {
-            position: absolute;
-            bottom: 30px;
-            left: 30px;
-            pointer-events: none;
-        }
-
-        /* --- CONTACT --- */
-        .contact-box {
-            background: var(--surface);
-            padding: 100px;
-            text-align: center;
-        }
-        .contact-box h2 { font-family: 'Syncopate'; font-size: 4vw; margin-bottom: 40px; }
-        .discord-pill {
-            display: inline-block;
-            border: 1px solid var(--accent);
-            padding: 15px 40px;
-            border-radius: 100px;
-            color: var(--accent);
+        .file-link {
+            padding: 8px 35px;
+            color: var(--text-main);
             text-decoration: none;
-            font-weight: 700;
-            transition: 0.3s;
+            display: block;
+            transition: 0.2s;
+            border-left: 2px solid transparent;
         }
-        .discord-pill:hover { background: var(--accent); color: #000; }
 
-        @media (max-width: 900px) {
-            .hero, .grid-layout { grid-template-columns: 1fr; }
-            .hero-meta { border-left: none; border-top: 1px solid var(--accent); padding: 40px 0; }
-            .work-item { grid-column: span 12 !important; }
+        .file-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent);
+        }
+
+        .file-link.active {
+            background: rgba(88, 166, 255, 0.1);
+            border-left: 2px solid var(--accent);
+            color: var(--accent);
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-view {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .tabs-bar {
+            height: 40px;
+            background: var(--bg-side);
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid var(--border);
+            font-size: 12px;
+            background: var(--bg-main);
+            color: var(--accent);
+        }
+
+        /* --- EDITOR STYLING --- */
+        .editor-content {
+            padding: 40px;
+            font-family: 'Fira Code', monospace;
+            line-height: 1.7;
+            max-width: 1000px;
+        }
+
+        .line-num { color: var(--border); margin-right: 20px; user-select: none; }
+        
+        .code-comment { color: #8b949e; }
+        .code-keyword { color: var(--keyword); }
+        .code-func { color: var(--function); }
+        .code-string { color: var(--string); }
+
+        /* --- GRID CARDS (Integrated into Editor) --- */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .project-card {
+            background: #161b22;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .project-card video, .project-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .project-meta { padding: 15px; }
+        .project-meta h4 { font-size: 14px; margin-bottom: 5px; color: var(--accent); }
+        .project-meta p { font-size: 12px; color: var(--text-dim); }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-main); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">CRICORDA //</div>
-        <div class="nav-links">
-            <a href="#work">Work</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </nav>
+    <aside class="sidebar">
+        <div class="sidebar-header">Explorer</div>
+        <div class="folder">▼ SRC</div>
+        <a href="#init" class="file-link active">init.lua</a>
+        <a href="#expertise" class="file-link">expertise.json</a>
+        <a href="#projects" class="file-link">projects.lua</a>
+        <div class="folder">▼ SOCIALS</div>
+        <a href="https://roblox.com" class="file-link">roblox_profile.url</a>
+        <a href="#" class="file-link">discord.txt</a>
+    </aside>
 
-    <main>
-        <section class="hero">
-            <h1 class="hero-title">Logic<br>Over<br>Magic</h1>
-            <div class="hero-meta">
-                <p>High-performance Roblox engineering. Modular systems built for the next generation of experiences.</p>
-                <a href="#work" class="nav-links" style="color:var(--accent); text-decoration: none; font-weight: bold;">VIEW ARCHIVE ↓</a>
-            </div>
-        </section>
-
-        <div class="marquee">
-            <div class="marquee-content">
-                &nbsp; COMMISSIONS OPEN • 180K+ MEMBERS REACHED • UNREAL X GAMES • +1 STUDIOS • OOP ARCHITECTURE • LUAU EXPERT • &nbsp;
-                &nbsp; COMMISSIONS OPEN • 180K+ MEMBERS REACHED • UNREAL X GAMES • +1 STUDIOS • OOP ARCHITECTURE • LUAU EXPERT • &nbsp;
-            </div>
+    <main class="main-view">
+        <div class="tabs-bar">
+            <div class="tab">init.lua</div>
         </div>
 
-        <section id="about" class="grid-layout">
-            <div>
-                <span class="section-num">01 / BACKGROUND</span>
-                <h2 style="font-size: 3rem; text-transform: uppercase; font-family: 'Syncopate';">The<br>Architect</h2>
-            </div>
-            <div>
-                <p style="font-size: 1.5rem; font-weight: 300; margin-bottom: 40px;">
-                    I don't just "script" games. I build technical ecosystems. Based in the Roblox environment since 2022, I specialize in the bridge between complex backend logic and seamless player interaction.
-                </p>
-                <div class="expertise-list">
-                    <div class="expertise-item">
-                        <h3>System Architecture</h3>
-                        <span>ProfileStore / Data</span>
-                    </div>
-                    <div class="expertise-item">
-                        <h3>Gameplay Physics</h3>
-                        <span>Combat / Movement</span>
-                    </div>
-                    <div class="expertise-item">
-                        <h3>AI Engineering</h3>
-                        <span>State Machines</span>
-                    </div>
+        <div class="editor-content" id="init">
+            <p><span class="line-num">01</span><span class="code-comment">-- Cricorda Portfolio v2026.02</span></p>
+            <p><span class="line-num">02</span><span class="code-keyword">local</span> developer = {</p>
+            <p><span class="line-num">03</span>&nbsp;&nbsp;&nbsp;&nbsp;name = <span class="code-string">"Cricorda"</span>,</p>
+            <p><span class="line-num">04</span>&nbsp;&nbsp;&nbsp;&nbsp;role = <span class="code-string">"Systems Engineer"</span>,</p>
+            <p><span class="line-num">05</span>&nbsp;&nbsp;&nbsp;&nbsp;specialty = <span class="code-string">"Modular Luau Architecture"</span></p>
+            <p><span class="line-num">06</span>}</p>
+            <p><span class="line-num">07</span>&nbsp;</p>
+            <p><span class="line-num">08</span><span class="code-keyword">function</span> <span class="code-func">developer:GetExperience</span>()</p>
+            <p><span class="line-num">09</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-string">"Unreal X Games (180K+), +1 Studios"</span></p>
+            <p><span class="line-num">10</span><span class="code-keyword">end</span></p>
+
+            <h2 style="margin-top: 60px; font-size: 1.2rem;" id="expertise">-- Expertise</h2>
+            <div class="project-grid">
+                <div class="project-card" style="padding: 20px;">
+                    <h4 class="code-func">Systems_Architecture.lua</h4>
+                    <p>ProfileStore integration, custom DataStore wrappers, and Luau Promise patterns.</p>
+                </div>
+                <div class="project-card" style="padding: 20px;">
+                    <h4 class="code-func">Game_Physics.lua</h4>
+                    <p>Modular combat, dash systems with after-images, and raycast-hitbox engineering.</p>
                 </div>
             </div>
-        </section>
 
-        <section id="work">
-            <span class="section-num">02 / SELECTED WORKS</span>
-            <div class="work-grid">
-                <div class="work-item large">
+            <h2 style="margin-top: 60px; font-size: 1.2rem;" id="projects">-- Featured_Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
                     <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
                         <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
                     </video>
-                    <div class="work-desc">
-                        <h4 style="font-family: 'Syncopate';">PATHFINDING AI</h4>
-                        <p style="color: var(--accent);">Sensory & Memory Systems</p>
+                    <div class="project-meta">
+                        <h4>Pathfinding_AI.mp4</h4>
+                        <p>State-machine based AI with memory and sensory FOV.</p>
                     </div>
                 </div>
-                <div class="work-item small">
-                    <img src="assets/images/SpeedCartImage.png" alt="Speed Cart">
-                    <div class="work-desc">
-                        <h4 style="font-family: 'Syncopate';">SIMULATOR ENGINE</h4>
-                        <p style="color: var(--accent);">Head Scripter</p>
-                    </div>
-                </div>
-                <div class="work-item small">
+                <div class="project-card">
                     <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
                         <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
                     </video>
-                    <div class="work-desc">
-                        <h4 style="font-family: 'Syncopate';">ABILITY SYSTEM</h4>
-                        <p style="color: var(--accent);">VFX & Logic</p>
-                    </div>
-                </div>
-                <div class="work-item large">
-                    <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
-                        <source src="assets/videos/FishingSystemPortfolio.mp4" type="video/mp4">
-                    </video>
-                    <div class="work-desc">
-                        <h4 style="font-family: 'Syncopate';">FISHING MECHANICS</h4>
-                        <p style="color: var(--accent);">Grand Piece Style</p>
+                    <div class="project-meta">
+                        <h4>Ability_System.mp4</h4>
+                        <p>Highly modular ability system using OOP principles.</p>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section id="contact">
-            <div class="contact-box">
-                <span class="section-num" style="margin-bottom: 40px;">03 / CONNECT</span>
-                <h2>Let's build the future.</h2>
-                <a href="#" class="discord-pill">DISCORD: cri.corda</a>
-                <p style="margin-top: 40px; color: var(--text-dim);">Currently accepting high-level engineering roles.</p>
+            <h2 style="margin-top: 60px; font-size: 1.2rem;">-- Terminal</h2>
+            <div style="background: #010409; padding: 20px; border-radius: 6px; border: 1px solid var(--border); color: var(--accent); font-size: 14px;">
+                <p>> cricorda.status</p>
+                <p style="color: #3fb950;">"Available for high-level commissions"</p>
+                <p style="margin-top: 10px;">> cricorda.contact</p>
+                <p style="color: var(--string);">"Discord: cri.corda"</p>
             </div>
-        </section>
+        </div>
     </main>
 
-    <footer style="padding: 40px 6%; border-top: 1px solid #222; display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px;">
-        <div>© 2026 Cricorda Engineering</div>
-        <div>Built for the Roblox Platform</div>
-    </footer>
-
+    <script>
+        // Smooth scroll for internal file links
+        document.querySelectorAll('.file-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if(href.startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+                    document.querySelectorAll('.file-link').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
