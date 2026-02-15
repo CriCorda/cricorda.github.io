@@ -16,7 +16,7 @@
             --border: rgba(255, 255, 255, 0.08);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         
         body {
             background: var(--bg);
@@ -112,7 +112,6 @@
 
         /* --- BUTTONS --- */
         .btn-group { display: flex; gap: 15px; }
-
         .btn {
             padding: 14px 35px;
             border-radius: 100px;
@@ -122,33 +121,22 @@
             transition: 0.3s;
             border: 1px solid transparent;
         }
-
-        .btn-primary {
-            background: #fff;
-            color: #000;
-        }
-
-        .btn-secondary {
-            background: var(--surface);
-            color: #fff;
-            border-color: var(--border);
-        }
-
+        .btn-primary { background: #fff; color: #000; }
+        .btn-secondary { background: var(--surface); color: #fff; border-color: var(--border); }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
-        /* --- EXPERTISE GRID --- */
-        section { padding: 100px 10%; text-align: center; }
-
+        /* --- SECTIONS --- */
+        section { padding: 100px 10%; text-align: center; max-width: 1400px; margin: 0 auto; }
         .section-header { margin-bottom: 60px; }
         .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
         .section-header div { width: 40px; height: 3px; background: var(--accent); margin: 0 auto; border-radius: 10px; }
 
+        /* --- EXPERTISE GRID --- */
         .expertise-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
-
         .exp-card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -157,11 +145,82 @@
             text-align: left;
             transition: 0.3s;
         }
-
         .exp-card:hover { border-color: var(--accent); background: rgba(168, 85, 247, 0.03); }
-
         .exp-card h3 { color: var(--accent); margin-bottom: 15px; }
         .exp-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
+
+        /* --- PORTFOLIO GRID (CRUX STYLE) --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .portfolio-grid { grid-template-columns: 1fr; }
+        }
+
+        .work-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .work-card:hover {
+            transform: scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .video-wrapper {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: 0.5s;
+        }
+
+        .work-card:hover video { opacity: 1; }
+
+        .work-info {
+            padding: 25px;
+            text-align: left;
+        }
+
+        .work-info h3 { font-size: 1.2rem; margin-bottom: 8px; }
+        .work-info p { color: var(--text-dim); font-size: 0.9rem; }
+
+        /* --- CONTACT SECTION --- */
+        .contact-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .discord-handle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            color: var(--accent);
+            background: rgba(168, 85, 247, 0.1);
+            padding: 15px 40px;
+            border-radius: 100px;
+            border: 1px solid var(--accent-glow);
+        }
 
         /* --- SCROLL INDICATOR --- */
         .scroll-down {
@@ -172,7 +231,6 @@
             color: var(--text-dim);
             text-transform: uppercase;
         }
-
     </style>
 </head>
 <body>
@@ -183,7 +241,7 @@
         <a href="#about" class="nav-item">About</a>
         <a href="#work" class="nav-item">Portfolio</a>
         <a href="#contact" class="nav-item">Contact</a>
-        <a href="#" class="nav-item nav-hire">Hire Me</a>
+        <a href="https://discord.com" class="nav-item nav-hire">Hire Me</a>
     </nav>
 
     <main class="hero" id="home">
@@ -194,11 +252,11 @@
         
         <h1>Roblox Systems<br>Engineering</h1>
         
-        <p>Reliable, modular code with scalable architecture. Specialized in delivering performance-optimized systems for the next generation of Roblox games.</p>
+        <p>Reliable, modular code with scalable architecture. Senior developer at Unreal X Games with experience managing systems for 180K+ members.</p>
         
         <div class="btn-group">
-            <a href="#work" class="btn btn-primary">Portfolio</a>
-            <a href="#contact" class="btn btn-secondary">Contact</a>
+            <a href="#work" class="btn btn-primary">My Works</a>
+            <a href="#contact" class="btn btn-secondary">Hire Me</a>
         </div>
 
         <div class="scroll-down">Scroll to explore</div>
@@ -208,24 +266,118 @@
         <div class="section-header">
             <h2>Expertise</h2>
             <div></div>
-            <p style="color: var(--text-dim); margin-top: 15px;">Technical skills and development focus</p>
         </div>
 
         <div class="expertise-grid">
             <div class="exp-card">
-                <h3>Lua Scripting</h3>
-                <p>Engineering complex game logic, data management, inventory systems, and responsive UIs with high efficiency.</p>
-            </div>
-            <div class="exp-card">
-                <h3>Game Design</h3>
-                <p>Designing and balancing core mechanics, economy systems, and player progression loops to maximize retention.</p>
+                <h3>Luau Architecture</h3>
+                <p>Advanced OOP, modular frameworks, and efficient event handling to ensure codebase maintainability.</p>
             </div>
             <div class="exp-card">
                 <h3>Backend Systems</h3>
-                <p>Senior-level integration of ProfileStore, cross-server communication, and optimized DataStore wrappers.</p>
+                <p>Expert integration of ProfileStore and optimized DataStore management for high-concurrency games.</p>
+            </div>
+            <div class="exp-card">
+                <h3>Game Mechanics</h3>
+                <p>Designing combat, movement, and interaction systems that feel responsive and high-fidelity.</p>
             </div>
         </div>
     </section>
 
+    <section id="work">
+        <div class="section-header">
+            <h2>Featured Projects</h2>
+            <div></div>
+            <p style="color: var(--text-dim); margin-top: 15px;">Hover to preview systems in action</p>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="work-card">
+                <div class="video-wrapper">
+                    <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                        <source src="assets/videos/pathfindingAIPortfolio.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="work-info">
+                    <h3>Sensory AI System</h3>
+                    <p>Advanced pathfinding and state-machine logic for intelligent NPCs.</p>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="video-wrapper">
+                    <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                        <source src="assets/videos/CombatSystemPortfolio.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="work-info">
+                    <h3>Combat Framework</h3>
+                    <p>Modular ability system with synchronized VFX and hitbox detection.</p>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="video-wrapper">
+                    <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                        <source src="assets/videos/DashVideoPortfolio.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="work-info">
+                    <h3>Movement Mechanics</h3>
+                    <p>Smooth, vector-based dashing and parkour frameworks.</p>
+                </div>
+            </div>
+
+            <div class="work-card">
+                <div class="video-wrapper">
+                    <video muted loop onmouseover="this.play()" onmouseout="this.pause()">
+                        <source src="assets/videos/FishingSystemPortfolio.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="work-info">
+                    <h3>World Interactions</h3>
+                    <p>Immersive gameplay loops including fishing and resource gathering.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-header">
+            <h2>Get In Touch</h2>
+            <div></div>
+        </div>
+
+        <div class="contact-container">
+            <p style="font-size: 1.2rem; color: var(--text-dim);">Ready to build something massive? Reach out via Discord.</p>
+            <div class="discord-handle">cri.corda</div>
+            <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.5;">Commissions: Open</p>
+        </div>
+    </section>
+
+    <footer style="padding: 50px 0; opacity: 0.3; font-size: 0.8rem; letter-spacing: 1px;">
+        &copy; 2026 CRICORDA ENGINEERING. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        // Simple active nav state logic
+        window.addEventListener('scroll', () => {
+            let current = "";
+            const sections = document.querySelectorAll("section, main");
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute("id");
+                }
+            });
+
+            document.querySelectorAll(".nav-item").forEach((a) => {
+                a.classList.remove("active");
+                if (a.getAttribute("href").includes(current)) {
+                    a.classList.add("active");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
