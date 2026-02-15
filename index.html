@@ -269,6 +269,80 @@
             opacity: 1;
             letter-spacing: 2px;
         }
+
+        #restricted {
+            background: linear-gradient(to bottom, transparent, rgba(255, 0, 0, 0.05), transparent);
+            border-top: 1px solid rgba(255, 77, 77, 0.1);
+            border-bottom: 1px solid rgba(255, 77, 77, 0.1);
+        }
+
+        .restricted-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .restricted-card {
+            background: rgba(20, 10, 10, 0.8);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .restricted-card:hover {
+            border-color: #ff4d4d;
+            box-shadow: 0 0 20px rgba(255, 77, 77, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .warning-icon {
+            font-family: 'JetBrains Mono', monospace;
+            color: #ff4d4d;
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .restricted-card h3 {
+            color: #ff4d4d;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .restricted-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .restricted-note {
+            margin-top: 40px;
+            color: #ff4d4d;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+        }
+
+        /* Subtle "Danger" pulse animation for the header */
+        @keyframes pulse-red {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        #restricted h2 {
+            animation: pulse-red 3s infinite ease-in-out;
+        }
     </style>
 </head>
 <body>
